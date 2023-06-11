@@ -1,0 +1,32 @@
+{
+  "name": "three-story-studio",
+  "version": "1.0.0",
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "next.config.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjdunteman/three-story-studio.git"
+  },
+  "author": "CJ Dunteman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cjdunteman/three-story-studio/issues"
+  },
+  "homepage": "https://github.com/cjdunteman/three-story-studio#readme",
+  "dependencies": {
+    "@portabletext/react": "^3.0.2",
+    "@sanity/client": "^6.1.2",
+    "@sanity/image-url": "^1.0.2",
+    "next": "^13.4.5",
+    "next-sanity": "^4.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
