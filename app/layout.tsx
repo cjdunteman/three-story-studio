@@ -1,12 +1,11 @@
 import './globals.css'
-import { Dancing_Script } from 'next/font/google'
-// import localFont from 'next/font/local'
 
-const dancing_script = Dancing_Script({ subsets: ['latin'] })
-// const print_clearly = localFont({
-//   src: '../public/fonts/PrintClearly-GGP.ttf',
-//   variable: '--font-print-clearly'
-// })
+import localFont from 'next/font/local'
+
+const print_clearly = localFont({
+  src: '../public/fonts/PrintClearly-GGP.ttf',
+  variable: '--font-print-clearly'
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -20,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={dancing_script.className}>{children}</body>
+      <body className={print_clearly.className}>
+        <div className="container mx-auto max-w-6xl flex">{children}</div>
+      </body>
     </html>
   )
 }

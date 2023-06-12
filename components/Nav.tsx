@@ -20,7 +20,7 @@ export default function Navbar() {
                     Stories
                 </Link>
                 <Link href="/letsTalk">
-                    Let's Talk
+                    Let&apos;s Talk
                 </Link>
             </nav>
         </div>
