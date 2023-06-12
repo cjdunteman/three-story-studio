@@ -5,7 +5,6 @@ import chair1 from '../assets/images/chair1.jpg'
 import chair2 from '../assets/images/chair2.jpg'
 import pillows from '../assets/images/pillows.jpg'
 import selfie from '../assets/images/selfie.jpg'
-import clsx from 'clsx'
 
 const dancing_script = Dancing_Script({
   subsets: ['latin'],
@@ -14,7 +13,7 @@ const dancing_script = Dancing_Script({
 
 export default function Home() {
   return (
-    <div>
+    <div className="container mx-auto max-w-6xl flex-col">
       <div className="flex flex-col items-center">
         <Image
           src="/3SS_logo_transparent.png"

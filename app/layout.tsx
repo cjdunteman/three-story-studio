@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={print_clearly.className}>
-        <div className="container mx-auto max-w-6xl flex">{children}</div>
+        <div >{children}</div>
       </body>
     </html>
   )
