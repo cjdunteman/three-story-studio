@@ -1,30 +1,30 @@
 import Image from 'next/image'
-import instagram from '../assets/icons/instagram.png'
-import facebook from '../assets/icons/facebook.png'
+import instagram from '../assets/icons/instagram.svg'
+import facebook from '../assets/icons/facebook.svg'
 
 export default function Footer() {
     return (
-        <footer className="flex justify-between">
+        <footer className="flex justify-between container mx-auto py-16">
             <div>
-                <p>CONTACT ME</p>
-                <a href="mailto: kristin@threestorystudio.com">kristin@threestorystudio.com</a>
+                <p className="text-3xl">CONTACT ME</p>
+                <a className="text-2xl font-bold" href="mailto: kristin@threestorystudio.com">kristin@threestorystudio.com</a>
             </div>
             <div>
-                <p>FOLLOW ME</p>
+                <p className="text-3xl">FOLLOW ME</p>
                 <div className="flex flex-end">
                     <a href="https://www.instagram.com/threestorystudio/">
                         <Image
                             src={instagram}
-                            height={24}
-                            width={24}
+                            height={32}
+                            width={32}
                             alt="instagram"
                         />
                     </a>
                     <a href="https://www.facebook.com/3storystudiollc">
                         <Image
                             src={facebook}
-                            height={24}
-                            width={24}
+                            height={32}
+                            width={32}
                             alt="facebook"
                         />
                     </a>

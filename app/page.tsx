@@ -13,39 +13,45 @@ const dancing_script = Dancing_Script({
 
 export default function Home() {
   return (
-    <div className="container mx-auto max-w-6xl flex-col">
-      <div className="flex flex-col items-center">
-        <Image
-          src="/3SS_logo_transparent.png"
-          width={300}
-          height={300}
-          alt="Three Story Studio Logo"
-        />
-        <h1 className={`${dancing_script.variable} font-sans text-4xl pb-4`}>
-          Custom upholstery & soft goods for your home
-        </h1>
-        <div className="my-6 pr-2 flex space-x-12">
+    <div>
+      <div className="container mx-auto flex-col">
+        <div className="flex flex-col items-center">
           <Image
-            src={pillows}
-            alt="Chair"
-            height={625}
-            width={350}
+            src="/3SS_logo_transparent.png"
+            width={300}
+            height={300}
+            alt="Three Story Studio Logo"
           />
-          <Image
-            src={chair2}
-            alt="Chair"
-            height={625}
-            width={350}
-          />
-          <Image
-            src={chair1}
-            alt="Chair"
-            height={625}
-            width={350}
-          />
+          <div className="border-b border-black py-4 mb-6">
+            <h1 className={`${dancing_script.variable} font-sans text-4xl pb-4`}>
+              Custom upholstery & soft goods for your home
+            </h1>
+          </div>
+          <div className="my-6 pr-2 pb-14 flex space-x-12">
+            <Image
+              src={pillows}
+              alt="Chair"
+              height={625}
+              width={350}
+            />
+            <Image
+              src={chair2}
+              alt="Chair"
+              height={625}
+              width={350}
+            />
+            <Image
+              src={chair1}
+              alt="Chair"
+              height={625}
+              width={350}
+            />
+          </div>
         </div>
-        <div className="flex my-6">
-          <Image className="pr-4"
+      </div>
+      <div className="bg-lightBeige">
+        <div className="flex container mx-auto py-12">
+          <Image className="pr-6"
             src={selfie}
             alt="Kristin"
             height={360}
@@ -61,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="bg-lightGray"><Footer /></div>
     </div>
   )
 }

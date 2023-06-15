@@ -10,9 +10,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        lightBeige: '#eee5d7',
+        lightGray: '#b7b8a9',
+      },
       fontFamily: {
         sans: ['var(--font-dancing-script)'],
-      }
+      },
     },
   },
   plugins: [],
