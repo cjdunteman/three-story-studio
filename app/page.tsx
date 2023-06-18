@@ -5,6 +5,7 @@ import chair1 from '../assets/images/chair1.jpg'
 import chair2 from '../assets/images/chair2.jpg'
 import pillows from '../assets/images/pillows.jpg'
 import selfie from '../assets/images/selfie.jpg'
+import Nav from '@/components/Nav'
 
 const dancing_script = Dancing_Script({
   subsets: ['latin'],
@@ -22,11 +23,12 @@ export default function Home() {
             height={300}
             alt="Three Story Studio Logo"
           />
-          <div className="border-b border-black py-4 mb-6">
+          <div className="border-b border-black py-4 mx-2 mb-6">
             <h1 className={`${dancing_script.variable} font-sans text-4xl pb-4`}>
               Custom upholstery & soft goods for your home
             </h1>
           </div>
+          <Nav />
           <div className="my-6 pr-2 pb-14 flex space-x-12">
             <Image
               src={pillows}
@@ -50,20 +52,22 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-lightBeige">
-        <div className="flex container mx-auto py-12">
-          <Image className="pr-6"
+        <div className="container mx-auto py-12">
+          <div className="flex flex-row justify-center">
+          <Image className="md:pr-10"
             src={selfie}
             alt="Kristin"
             height={360}
             width={300}
           />
-          <div>
+          <div className="md:max-w-xl">
             <p className="text-4xl">WELCOME TO MY STUDIO</p>
-            <p className={`${dancing_script.variable} font-sans text-2xl pb-2`}>Proudly located in Sussex, Wisconsin</p>
-            <p className="text-xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
+            <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
+            <p className="text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
             <br>
             </br>
-            <p className="text-xl">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
+            <p className="text-2xl">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
+          </div>
           </div>
         </div>
       </div>

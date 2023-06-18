@@ -2,26 +2,17 @@ import Link from "next/link";
 
 export default function Navbar() {
     return (
-        <div>
-            <nav>
-                <Link href="/">
+        <div className="hidden md:block mb-10 mt-4">
+            <nav className="text-3xl flex items-center">
+                <Link className="pr-4 border-r mr-4 border-black" href="/">
                     Home
                 </Link>
-                <Link href="/peeks">
+                <Link className="" href="/peeks">
                     Peeks
                 </Link>
-                <Link href="/about">
-                    About
-                </Link>
-                <Link href="/whatIDo">
-                    What I Do
-                </Link>
-                <Link href="/stories">
-                    Stories
-                </Link>
-                <Link href="/letsTalk">
+                {/* <Link href="/letsTalk">
                     Let&apos;s Talk
-                </Link>
+                </Link> */}
             </nav>
         </div>
     )
