@@ -7,12 +7,12 @@ export default function Navbar() {
                 <Link className="pr-4 border-r mr-4 border-black" href="/">
                     Home
                 </Link>
-                <Link className="" href="/peeks">
+                <Link className="pr-4 border-r mr-4 border-black" href="/peeks">
                     Peeks
                 </Link>
-                {/* <Link href="/letsTalk">
-                    Let&apos;s Talk
-                </Link> */}
+                <Link className="" href="/stories">
+                    Stories
+                </Link>
             </nav>
         </div>
     )

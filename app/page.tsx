@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Footer from '@/components/Footer'
-import { Dancing_Script } from 'next/font/google'
 import chair1 from '../assets/images/chair1.jpg'
 import chair2 from '../assets/images/chair2.jpg'
 import pillows from '../assets/images/pillows.jpg'
 import selfie from '../assets/images/selfie.jpg'
+import Header from '@/components/Header'
 import Nav from '@/components/Nav'
+import { Dancing_Script } from 'next/font/google'
 
 const dancing_script = Dancing_Script({
   subsets: ['latin'],
@@ -14,22 +15,12 @@ const dancing_script = Dancing_Script({
 
 export default function Home() {
   return (
-    <div>
+    <>
       <div className="container mx-auto flex-col">
         <div className="flex flex-col items-center">
-          <Image
-            src="/3SS_logo_transparent.png"
-            width={300}
-            height={300}
-            alt="Three Story Studio Logo"
-          />
-          <div className="border-b border-black py-4 mx-2 mb-6">
-            <h1 className={`${dancing_script.variable} font-sans text-4xl pb-4`}>
-              Custom upholstery & soft goods for your home
-            </h1>
-          </div>
+          <Header />
           <Nav />
-          <div className="my-6 pr-2 pb-14 flex space-x-12">
+          <div className="flex flex-col items-center md:my-6 max-w-6xl md:flex-row md:justify-between w-full">
             <Image
               src={pillows}
               alt="Chair"
@@ -52,7 +43,7 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-lightBeige">
-        <div className="container mx-auto py-12">
+        <div className="container mx-auto md:py-12">
           <div className="flex flex-row justify-center">
           <Image className="md:pr-10"
             src={selfie}
@@ -61,17 +52,17 @@ export default function Home() {
             width={300}
           />
           <div className="md:max-w-xl">
-            <p className="text-4xl">WELCOME TO MY STUDIO</p>
+            <p className="text-2xl md:text-4xl">WELCOME TO MY STUDIO</p>
             <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
-            <p className="text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
+            <p className="text-xl md:text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
             <br>
             </br>
-            <p className="text-2xl">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
+            <p className="text-md md:text-2xl">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
           </div>
           </div>
         </div>
       </div>
       <div className="bg-lightGray"><Footer /></div>
-    </div>
+    </>
   )
 }

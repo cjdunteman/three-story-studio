@@ -3,3 +3,5 @@ const blockContent = {
     name: 'blockContent',
     type: 'array',
 }
+
+export default blockContent;
