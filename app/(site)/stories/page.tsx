@@ -9,8 +9,6 @@ export default async function Stories() {
     return (
       <>
         <div className="flex flex-col items-center">
-          <Header />
-          <Nav />
           </div>
         <div>
             {posts.map((post) => (

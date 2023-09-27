@@ -19,8 +19,8 @@ const post = {
             title: 'Slug',
             type: 'slug',
             options: {
-              source: 'title',
-              maxLength: 96,
+                source: 'title',
+                maxLength: 96,
             },
         },
         {

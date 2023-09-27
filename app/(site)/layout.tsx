@@ -1,9 +1,12 @@
-import './globals.css'
+import '../globals.css'
+import Header from '@/components/Header'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 
 import localFont from 'next/font/local'
 
 const print_clearly = localFont({
-  src: '../public/fonts/PrintClearly-GGP.ttf',
+  src: '../../public/fonts/PrintClearly-GGP.ttf',
   variable: '--font-print-clearly'
 })
 
@@ -20,7 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={print_clearly.className}>
-        <div className="">{children}</div>
+        <div className="flex flex-col items-center">
+          <Header />
+          <Nav />
+          {children}
+        </div>
+        <div className="bg-lightGray"><Footer /></div>
       </body>
     </html>
   )

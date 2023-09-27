@@ -13,15 +13,15 @@ const author = {
             title: 'Image',
             type: 'image',
             options: {
-              hotspot: true,
+                hotspot: true,
             },
         }
     ],
     preview: {
-      select: {
-        title: 'name',
-        media: 'image',
-      },
+        select: {
+            title: 'name',
+            media: 'image',
+        },
     },
 }
 
