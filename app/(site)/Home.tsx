@@ -3,8 +3,12 @@ import chair1 from '../../assets/images/chair1.jpg';
 import chair2 from '../../assets/images/chair2.jpg';
 import pillows from '../../assets/images/pillows.jpg';
 import selfie from '../../assets/images/selfie.jpg';
-import { dancing_script } from './page';
+import { Dancing_Script } from "next/font/google"
 
+const dancing_script = Dancing_Script({
+    subsets: ['latin'],
+    variable: '--font-dancing-script'
+})
 
 export default function Home() {
     return (

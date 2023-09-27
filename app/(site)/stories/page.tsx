@@ -1,14 +1,14 @@
-import { getPosts } from '@/sanity/sanity-utils'
+// import { getPosts } from '@/sanity/sanity-utils'
 import Header from '@/components/Header'
 import Nav from '@/components/Nav'
 
 export default async function Stories() {
 
-    const posts = await getPosts();
+  // const posts = await getPosts();
 
-    return (
-      <>
-        <div className="flex flex-col items-center">
+  return (
+    <>
+      {/* <div className="flex flex-col items-center">
           </div>
         <div>
             {posts.map((post) => (
@@ -16,7 +16,7 @@ export default async function Stories() {
                         {post.title}
                     </div>
                     ))}
-        </div>
-      </>
-    )
+        </div> */}
+    </>
+  )
 }
