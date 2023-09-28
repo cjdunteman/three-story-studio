@@ -14,7 +14,7 @@ const dancing_script = Dancing_Script({
 export default function Home() {
   return (
     <>
-      <div className="container mx-auto flex-col">
+      <div className="container mx-auto flex-col items-center">
         <div className="flex flex-col items-center">
           <div className="flex flex-col items-center md:my-6 max-w-6xl md:flex-row md:justify-between w-full">
             <Image

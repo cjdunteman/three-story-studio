@@ -1,7 +1,7 @@
 import author from "./author-schema";
-import blockContent from "./blockContent-schema";
 import post from "./post-schema";
+import project from "./project-schema";
 
-const [schemas] = [author, blockContent, post];
+const schemas = [post, author, project];
 
 export default schemas;

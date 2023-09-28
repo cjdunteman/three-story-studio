@@ -1,11 +1,10 @@
 import Image from "next/image"
 import { Dancing_Script } from 'next/font/google'
-import Nav from "@/components/Nav"
 
 const dancing_script = Dancing_Script({
     subsets: ['latin'],
     variable: '--font-dancing-script'
-  })
+})
 
 export default function Peeks() {
     return (
