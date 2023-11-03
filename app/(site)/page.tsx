@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Footer from '@/components/Footer'
 import chair1 from '../../assets/images/chair1.jpg'
 import chair2 from '../../assets/images/chair2.jpg'
 import pillows from '../../assets/images/pillows.jpg'

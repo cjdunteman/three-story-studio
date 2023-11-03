@@ -3,6 +3,7 @@ import { deskTool } from 'sanity/desk';
 import { visionTool } from '@sanity/vision';
 import schemas from './sanity/schemas';
 import { media } from 'sanity-plugin-media';
+import { defaultDocumentNode } from '@/sanity/desk/defaultDocumentNode'
 
 const config = defineConfig({
     projectId: 'f8y83dz4',
@@ -11,8 +12,8 @@ const config = defineConfig({
     apiVersion: '2023-06-11',
     basePath: '/admin',
     plugins: isDev
-        ? [deskTool(), media(), visionTool()]
-        : [deskTool(), media()],
+        ? [deskTool({ defaultDocumentNode }), media(), visionTool()]
+        : [deskTool({ defaultDocumentNode })],
     schema: { types: schemas }
 })
 

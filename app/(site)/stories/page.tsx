@@ -1,22 +1,22 @@
-// import { getPosts } from '@/sanity/sanity-utils'
-import Header from '@/components/Header'
-import Nav from '@/components/Nav'
+import { SanityDocument } from '@sanity/client';
+import PreviewProvider from '@/components/PreviewProvider';
+import { sanityFetch, token } from '@/sanity/lib/sanity.fetch';
+import { postsQuery } from '@/sanity/lib/queries';
+import PreviewPosts from '@/components/PreviewPosts';
+import { draftMode } from 'next/headers';
+import Posts from '@/components/Posts';
 
 export default async function Stories() {
+  const posts = await sanityFetch<SanityDocument[]>({ query: postsQuery });
+  const isDraftMode = draftMode().isEnabled;
 
-  // const posts = await getPosts();
+  if (isDraftMode && token) {
+    return (
+      <PreviewProvider token={token}>
+        <PreviewPosts posts={posts} />
+      </PreviewProvider>
+    );
+  }
 
-  return (
-    <>
-      {/* <div className="flex flex-col items-center">
-          </div>
-        <div>
-            {posts.map((post) => (
-                    <div key={post._id}>
-                        {post.title}
-                    </div>
-                    ))}
-        </div> */}
-    </>
-  )
+  return <Posts posts={posts} />;
 }

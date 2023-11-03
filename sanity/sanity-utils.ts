@@ -1,9 +1,34 @@
 import { createClient, groq } from 'next-sanity'
-import { client } from './client-config'
+// import client  from './client-config'
+import { client } from './client-config';
 import { Post } from '@/types/Post'
-import { Project } from '@/types/Project'
+import { Gallery } from '@/types/Gallery';
 
-// Get all post slugs
-export const postPathsQuery = groq`*[_type == "post" && defined(slug.current)][]{
-  "params": { "slug": slug.current }
-}`;
+export async function getPosts(): Promise<Post[]> {
+  return client.fetch(
+    groq`*[_type == "post"]{
+      _id,
+      name,
+      title,
+      "slug": slug.current,
+    }`
+  )
+}
+
+export async function getPost(slug: string): Promise<Post> {
+  return client.fetch(
+    groq`*[_type == "post"]{
+      _id,
+      name,
+      title,
+      "slug": slug.current,
+    }`
+  )
+
+}
+
+export async function getGallery(): Promise<Gallery> {
+  return client.fetch(
+    groq`*[_type == "gallery"][0]["gallery"]`
+  )
+}
