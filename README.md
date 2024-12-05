@@ -1,1 +1,8 @@
-Repo for [Three Story Studio](https://www.threestorystudio.com)
+# blank
+
+blank
+
+## Attributes
+
+- **Database**: mongodb
+- **Storage Adapter**: localDisk
