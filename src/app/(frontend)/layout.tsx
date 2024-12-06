@@ -23,10 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={print_clearly.className}>
-        <div className="flex flex-col items-center">
-          <Header />
-          <Nav />
-        </div>
+        <Header />
         <div>
           {children}
         </div>

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { Dancing_Script } from "next/font/google"
+import Link from "next/link"
 
 const dancing_script = Dancing_Script({
   subsets: ['latin'],
@@ -8,18 +9,31 @@ const dancing_script = Dancing_Script({
 
 export default function Header() {
   return (
-    <>
-      <Image
-        src="/3SS_logo_transparent.png"
-        width={300}
-        height={300}
-        alt="Three Story Studio Logo"
-      />
-      <div className="border-b border-black py-4 mx-2 mb-6">
-        <h1 className={`${dancing_script.variable} font-sans text-xl md:text-4xl pb-4`}>
-          Custom upholstery & soft goods for your home
-        </h1>
+    <div className="grid grid-cols-3 place-items-center items-center">
+      <div>
+        <Image
+          src="/3SS_logo_transparent.png"
+          width={300}
+          height={300}
+          alt="Three Story Studio Logo"
+        />
       </div>
-    </>
+      <div className="text-3xl">
+        <Link className="pr-4 border-r mr-4 border-black" href="/">
+              Home
+          </Link>
+          <Link className="pr-4 border-r mr-4 border-black" href="/peeks">
+              Peeks
+          </Link>
+          <Link className="" href="/stories">
+              Stories
+        </Link>
+      </div>
+        <div>      
+          <a href="mailto:kristin@threestorystudio.com">
+            <button className="border-2 py-2 px-4 rounded text-3xl border-lightBeige">Inquire</button>
+          </a>
+        </div>
+    </div>
   )
 }

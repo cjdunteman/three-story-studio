@@ -15,6 +15,11 @@ export default function Home() {
     <>
       <div className="container mx-auto flex-col items-center">
         <div className="flex flex-col items-center">
+        <div className="border-b border-black py-4 mx-2 mb-6">
+        <h1 className={`${dancing_script.variable} font-sans text-xl md:text-4xl pb-4`}>
+          Custom upholstery & soft goods for your home
+        </h1>
+      </div>
           <div className="flex flex-col items-center md:my-6 md:p-12 max-w-6xl md:flex-row md:justify-between w-full">
             <Image
               src={pillows}
@@ -38,12 +43,6 @@ export default function Home() {
       </div>
       <div className="md:py-12 bg-lightBeige">
         <div className="flex flex-row justify-center">
-          <Image className="md:pr-10"
-            src={selfie}
-            alt="Kristin"
-            height={360}
-            width={300}
-          />
           <div className="md:max-w-3xl">
             <p className="text-2xl md:text-4xl">WELCOME TO MY STUDIO</p>
             <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
