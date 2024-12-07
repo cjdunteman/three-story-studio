@@ -1,11 +1,11 @@
 import Image from "next/image"
-import { Dancing_Script } from "next/font/google"
+// import { Dancing_Script } from "next/font/google"
 import Link from "next/link"
 
-const dancing_script = Dancing_Script({
-  subsets: ['latin'],
-  variable: '--font-dancing-script'
-})
+// const dancing_script = Dancing_Script({
+//   subsets: ['latin'],
+//   variable: '--font-dancing-script'
+// })
 
 export default function Header() {
   return (

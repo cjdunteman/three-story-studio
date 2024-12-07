@@ -2,7 +2,6 @@ import Image from 'next/image'
 import chair1 from '../../../assets/images/chair1.jpg'
 import chair2 from '../../../assets/images/chair2.jpg'
 import pillows from '../../../assets/images/pillows.jpg'
-import selfie from '../../../assets/images/selfie.jpg'
 import { Dancing_Script } from 'next/font/google'
 
 const dancing_script = Dancing_Script({
@@ -15,8 +14,8 @@ export default function Home() {
     <>
       <div className="container mx-auto flex-col items-center">
         <div className="flex flex-col items-center">
-        <div className="border-b border-black py-4 mx-2 mb-6">
-        <h1 className={`${dancing_script.variable} font-sans text-xl md:text-4xl pb-4`}>
+          <div className="border-b border-black py-4 mx-2 mb-6">
+          <h1 className={`${dancing_script.variable} font-sans text-xl md:text-4xl pb-4`}>
           Custom upholstery & soft goods for your home
         </h1>
       </div>
