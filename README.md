@@ -1,8 +1,5 @@
-# blank
+# Three Story Studio
 
-blank
+The official repo for [threestorystudio.com](https://www.threestorystudio.com)
 
-## Attributes
-
-- **Database**: mongodb
-- **Storage Adapter**: localDisk
+Built using Next.js, PayloadCMS, and Supabase.
