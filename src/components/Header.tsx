@@ -18,7 +18,7 @@ export default function Header() {
           alt="Three Story Studio Logo"
         />
       </div>
-      <div className="text-3xl">
+      <nav className="text-3xl">
         <Link className="pr-4 border-r mr-4 border-black" href="/">
               Home
           </Link>
@@ -28,7 +28,7 @@ export default function Header() {
           <Link className="" href="/stories">
               Stories
         </Link>
-      </div>
+      </nav>
         <div>      
           <a href="mailto:kristin@threestorystudio.com">
             <button className="border-2 py-2 px-4 rounded text-3xl border-lightBeige">Inquire</button>
