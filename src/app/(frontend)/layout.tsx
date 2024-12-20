@@ -27,7 +27,7 @@ export default function RootLayout({
         <div>
           {children}
         </div>
-        <div className="bg-lightGray"><Footer /></div>
+        <Footer />
       </body>
     </html>
   )

@@ -11,15 +11,12 @@ const dancing_script = Dancing_Script({
 
 export default function Home() {
   return (
-    <>
-      <div className="container mx-auto flex-col items-center">
-        <div className="flex flex-col items-center">
-          <div className="border-b border-black py-4 mx-2 mb-6">
-          <h1 className={`${dancing_script.variable} font-sans text-xl md:text-4xl pb-4`}>
-          Custom upholstery & soft goods for your home
-        </h1>
-      </div>
-          <div className="flex flex-col items-center md:my-6 md:p-12 max-w-6xl md:flex-row md:justify-between w-full">
+    <div>
+      <div className="w-11/12 mx-auto flex flex-col items-center mb-8">
+          <h1 className={`${dancing_script.variable} font-sans text-xl mb-8 border-b-2 md:text-4xl`}>
+          Custom upholstery & soft goods for your home  
+          </h1> 
+          <div className="flex-wrap gap-8 justify-center md:flex md:flex-row">
             <Image
               src={pillows}
               alt="Chair"
@@ -38,20 +35,17 @@ export default function Home() {
               width={312}
             />
           </div>
+      </div>
+      <div className="bg-lightBeige px-8">
+        <div className="max-w-4xl mx-auto py-8">
+          <p className="text-2xl">WELCOME TO MY STUDIO</p>
+          <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
+          <p className="text-xl md:text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
+          <br>
+          </br>
+          <p className="text-md">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
         </div>
       </div>
-      <div className="md:py-12 bg-lightBeige">
-        <div className="flex flex-row justify-center">
-          <div className="md:max-w-3xl">
-            <p className="text-2xl md:text-4xl">WELCOME TO MY STUDIO</p>
-            <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
-            <p className="text-xl md:text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
-            <br>
-            </br>
-            <p className="text-md md:text-2xl">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   )
 }
