@@ -5,6 +5,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { resendAdapter } from '@payloadcms/email-resend'
 
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
@@ -53,4 +54,9 @@ export default buildConfig({
       },
     }),
   ],
+  email: resendAdapter({
+    defaultFromAddress: 'no-reply@cjdunteman.com',
+    defaultFromName: 'No Reply - Three Story Studio',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 })
