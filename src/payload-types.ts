@@ -83,6 +83,7 @@ export interface User {
 export interface Media {
   id: number;
   alt: string;
+  project?: (number | null) | Project;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -192,6 +193,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  project?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;

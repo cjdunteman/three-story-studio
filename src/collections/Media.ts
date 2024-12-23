@@ -11,6 +11,12 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'project',
+      type: 'relationship',
+      relationTo: 'projects',
+      required: false,
+    },
   ],
   upload: true,
 }
