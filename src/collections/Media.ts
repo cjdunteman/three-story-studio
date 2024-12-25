@@ -17,6 +17,13 @@ export const Media: CollectionConfig = {
       relationTo: 'projects',
       required: false,
     },
+    {
+      name: 'status',
+      type: 'checkbox',
+      label: 'Finished Piece',
+      required: false,
+      defaultValue: false,
+    }
   ],
   upload: true,
 }

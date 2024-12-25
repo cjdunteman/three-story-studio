@@ -72,8 +72,6 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
-  _verified?: boolean | null;
-  _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
@@ -86,6 +84,7 @@ export interface Media {
   id: number;
   alt: string;
   project?: (number | null) | Project;
+  status?: boolean | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -186,8 +185,6 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
-  _verified?: T;
-  _verificationToken?: T;
   loginAttempts?: T;
   lockUntil?: T;
 }
@@ -198,6 +195,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   project?: T;
+  status?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
