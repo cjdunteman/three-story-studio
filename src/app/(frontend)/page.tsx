@@ -28,13 +28,13 @@ export default async function Home() {
     <div>
       <div className="w-11/12 mx-auto flex flex-col items-center mb-8">
           <h1 className={`${dancing_script.variable} font-sans text-3xl mb-8 border-b-2 text-center md:text-4xl`}>
-          Custom upholstery & soft goods for your home  
+            Custom upholstery & soft goods for your home  
           </h1> 
-          <div className="overflow-x-auto whitespace-nowrap max-w-7xl scrollbar-hide md:p-10 gap-8 md:flex md:flex-row">
+          <div className="flex overflow-x-auto max-w-7xl scrollbar-hide md:p-10 gap-4 md:flex md:flex-row snap-x snap-mandatory items-center">
             {images.docs.map(({id, url, alt})=> (
-              <div key={id} className="flex-shrink-0 mb-4 break-inside-avoid">
+              <div key={id} className="flex-shrink-0 mb-4 break-inside-avoid snap-center">
                   <Link href="#">
-                      <Image src={url!} alt={alt} height={300} width={300} className="w-full object-cover" />
+                      <Image src={url!} alt={alt} width={300} height={300} className="w-full object-cover" />
                   </Link>
               </div>
             ))}
@@ -44,10 +44,12 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto py-8">
           <p className="text-2xl">WELCOME TO MY STUDIO</p>
           <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
-          <p className="text-xl md:text-2xl">Hi, my name is Kristin and I&apos;m glad you stopped by! I love to help people create beautiful homes through the renewal of cherished pieces and custom made accents such as footstools, bench cushions, and pillows.</p>
+          <p className="text-xl md:text-2xl">Hello and welcome!</p><br />
+          <p className="text-xl md:text-2xl">My name is Kristin and I'm glad you stopped by. A well-loved home reflects your own personal style and history. It is your story to tell. I enjoy collaborating with people to help make that happen.</p><br />
+          <p className="text-xl md:text-2xl">Bespoke furniture hupholstery and various types of custom-made soft goods are my specialty. High quality craftsmanship, attention to detail and individual style are the basis of my trade.</p><br />
+          <p className="text-xl md:text-2xl">Drop me a line and I'd be happy to speak with you about your specific project needs/ideas. Hope to meet you soon!</p>
           <br>
           </br>
-          <p className="text-lg">Drop me a line and I&apos;ll be happy to chat with you about your specific project and how I may help you. Thank you!</p>
         </div>
       </div>
     </div>

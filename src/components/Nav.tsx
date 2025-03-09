@@ -10,8 +10,8 @@ export default function Navbar() {
                 <Link className="pr-4 border-r mr-4 border-black" href="/peeks">
                     Peeks
                 </Link>
-                <Link className="" href="/stories">
-                    Stories
+                <Link className="" href="/about">
+                    About
                 </Link>
             </nav>
         </div>
