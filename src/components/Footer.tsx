@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import instagram from '../../assets/icons/instagram.svg'
 import facebook from '../../assets/icons/facebook.svg'
+import linkedin from '../../assets/icons/linkedin.svg'
 
 export default function Footer() {
     return (
@@ -12,7 +13,15 @@ export default function Footer() {
                 </div>
                 <div>
                     <p className="text-2xl">FOLLOW ME</p>
-                    <div className="flex flex-end">
+                    <div className="flex flex-end space-x-2">
+                        <a href="https://www.linkedin.com/in/kristin-dunteman-1197aa72/">
+                            <Image
+                                src={linkedin}
+                                height={32}
+                                width={32}
+                                alt="LinkedIn"
+                            />
+                        </a>
                         <a href="https://www.instagram.com/threestorystudio/">
                             <Image
                                 src={instagram}
