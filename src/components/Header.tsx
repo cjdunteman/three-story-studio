@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Dialog, DialogPanel } from '@headlessui/react'
+import { Dialog, DialogPanel, Description, DialogTitle } from '@headlessui/react'
 import { Bars3Icon } from "@heroicons/react/24/outline"
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false)
 
   return (
     <header>
@@ -34,22 +35,37 @@ export default function Header() {
         <div className="hidden lg:flex lg:gap-x-12">
           <div className="text-3xl">
             <Link className="pr-4 border-r mr-4 border-black" href="/">
-                  Home
-              </Link>
-              <Link className="pr-4 border-r mr-4 border-black" href="/peeks">
-                  Peeks
-              </Link>
-              <Link className="" href="/about">
-                  About
+              Home
+            </Link>
+            <Link className="pr-4 border-r mr-4 border-black" href="/gallery">
+              Gallery
+            </Link>
+            <Link className="" href="/about">
+              About
             </Link>
           </div>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <div>      
-              <a href="mailto:kristin@threestorystudio.com">
-                <button className="border-2 py-2 px-4 rounded text-3xl border-lightBeige">Inquire</button>
-              </a>
+                    <div><a href="mailto:kristin@threestorystudio.com">
+            <button onClick={() => setIsOpen(true)} className="py-2 px-4 rounded text-3xl bg-[#C5D1CF]">Inquire</button>
+            </a>
+          </div>
+          {/* <div>
+            <button onClick={() => setIsOpen(true)} className="border-2 py-2 px-4 rounded text-3xl border-lightBeige">Inquire</button>
+          </div>
+          <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+            <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+              <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+                <DialogTitle className="font-bold">Deactivate account</DialogTitle>
+                <Description>This will permanently deactivate your account</Description>
+                <p>Are you sure you want to deactivate your account? All of your data will be permanently removed.</p>
+                <div className="flex gap-4">
+                  <button onClick={() => setIsOpen(false)}>Cancel</button>
+                  <button onClick={() => setIsOpen(false)}>Submit</button>
+                </div>
+              </DialogPanel>
             </div>
+          </Dialog> */}
         </div>
       </nav>
       {/* The mobile menu is built from a Dialog component from Headless UI */}
@@ -57,7 +73,7 @@ export default function Header() {
         <div className="fixed inset-0 z-10">
           <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex flex-row-reverse">
-             <button
+              <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
                 className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -68,11 +84,11 @@ export default function Header() {
             </div>
             <div className="flex flex-col gap-8">
               <Link className="text-2xl font-bold" href="/">Home</Link>
-              <Link className="text-2xl font-bold" href="/peeks">Peeks</Link>
+              <Link className="text-2xl font-bold" href="/gallery">Gallery</Link>
               <Link className="text-2xl font-bold" href="/stories">Stories</Link>
               <a href="mailto:kristin@threestorystudio.com">
-                  <button className="border-2 py-2 px-2 rounded text-3xl border-lightBeige">Inquire
-                  </button>
+                <button className="border-2 py-2 px-2 rounded text-3xl border-lightBeige">Inquire
+                </button>
               </a>
             </div>
           </DialogPanel>

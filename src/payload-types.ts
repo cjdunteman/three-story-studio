@@ -84,7 +84,8 @@ export interface Media {
   id: number;
   alt: string;
   project?: (number | null) | Project;
-  status?: boolean | null;
+  homePage?: boolean | null;
+  finishedPiece?: boolean | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -105,10 +106,7 @@ export interface Media {
 export interface Project {
   id: number;
   name: string;
-  images?: {
-    relationTo: 'media';
-    value: number | Media;
-  } | null;
+  media?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -195,7 +193,8 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   project?: T;
-  status?: T;
+  homePage?: T;
+  finishedPiece?: T;
   prefix?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -215,7 +214,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
-  images?: T;
+  media?: T;
   updatedAt?: T;
   createdAt?: T;
 }

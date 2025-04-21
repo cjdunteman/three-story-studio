@@ -12,9 +12,10 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
-      name: 'images',
+      name: 'media',
       type: 'relationship',
-      relationTo: ['media'],
+      relationTo: 'media',
+      hasMany: true,
     }
   ],
 }
