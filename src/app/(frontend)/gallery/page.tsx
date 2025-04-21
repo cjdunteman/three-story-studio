@@ -2,7 +2,6 @@ import configPromise from '@payload-config'
 import { getPayload } from "payload"
 import Image from 'next/image'
 import Link from 'next/link'
-import { Project } from '@/payload-types'
 
 export default async function Page() {
     const payload = await getPayload({ config: configPromise })

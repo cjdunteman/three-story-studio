@@ -1,8 +1,3 @@
-import configPromise from '@payload-config'
-import { getPayload } from "payload"
-import Image from 'next/image'
-import Link from 'next/link'
-
 export default async function About() {
 
     return (

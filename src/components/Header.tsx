@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Dialog, DialogPanel, Description, DialogTitle } from '@headlessui/react'
+import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon } from "@heroicons/react/24/outline"
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  let [isOpen, setIsOpen] = useState(false)
+  // let [isOpen, setIsOpen] = useState(false)
 
   return (
     <header>
@@ -47,7 +47,7 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <div><a href="mailto:kristin@threestorystudio.com">
-            <button onClick={() => setIsOpen(true)} className="py-2 px-4 rounded text-3xl bg-[#C5D1CF]">Inquire</button>
+            <button className="py-2 px-4 rounded text-3xl bg-[#C5D1CF]">Inquire</button>
             </a>
           </div>
           {/* <div>
