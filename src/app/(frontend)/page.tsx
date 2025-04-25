@@ -45,8 +45,8 @@ export default async function Home() {
           ))}
         </div>
       </div>
-      <div className="bg-[#BEB19B] px-8">
-        <div className="max-w-4xl mx-auto py-8">
+      <section className="py-20 bg-taupe px-8">
+        <div className="max-w-4xl mx-auto">
           <p className="text-2xl">WELCOME TO MY STUDIO</p>
           <p className={`${dancing_script.variable} font-sans text-2xl pb-8`}>Proudly located in Sussex, Wisconsin</p>
           <p className="text-xl md:text-2xl">Hello and welcome!</p><br />
@@ -56,7 +56,7 @@ export default async function Home() {
           <br>
           </br>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

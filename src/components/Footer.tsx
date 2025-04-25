@@ -5,8 +5,10 @@ import facebook from '../../assets/icons/facebook.svg'
 import linkedin from '../../assets/icons/linkedin.svg'
 
 export default function Footer() {
+    const currentYear = new Date().getFullYear()
+
     return (
-        <footer className="bg-[#CFCABD] px-8 py-12">
+        <footer className="bg-gradient-to-b from-taupe-light to-taupe px-8 py-12">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Logo Column */}
                 <div>
@@ -47,7 +49,7 @@ export default function Footer() {
                     <div className="space-y-4">
                         <a 
                             href="mailto:kristin@threestorystudio.com"
-                            className="inline-block bg-[#B2C0BE] text-black px-4 py-3 rounded transition-colors text-xl md:text-2xl"
+                            className="bg-sage hover:bg-sage-dark text-gray-800 px-4 py-3 rounded transition-colors text-xl md:text-2xl"
                         >
                             Send an Email
                         </a>
