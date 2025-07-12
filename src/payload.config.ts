@@ -32,6 +32,13 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    afterSchemaInit: [
+      ({ schema }) => {
+        // Enable RLS for all tables
+        Object.values(schema.tables).forEach((table) => table.enableRLS());
+        return schema;
+      },
+    ],
   }),
   sharp,
   plugins: [
