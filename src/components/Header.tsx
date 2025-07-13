@@ -85,9 +85,9 @@ export default function Header() {
               </button>
             </div>
             <div className="flex flex-col gap-8">
-              <Link className="text-2xl font-bold" href="/">Home</Link>
-              <Link className="text-2xl font-bold" href="/gallery">Gallery</Link>
-              <Link className="text-2xl font-bold" href="/stories">Stories</Link>
+              <Link className="text-2xl font-bold" href="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link className="text-2xl font-bold" href="/gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
+              <Link className="text-2xl font-bold" href="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
               <a href="mailto:kristin@threestorystudio.com">
                 <button className="border-2 py-2 px-2 rounded text-3xl border-lightBeige">Inquire
                 </button>
