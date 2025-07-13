@@ -19,7 +19,7 @@ export default function Header() {
               src="/3SS_logo_transparent.png"
               alt="Three Story Studio Logo"
               width={142}
-              height={0}
+              height={124}
             />
           </a>
         </div>
