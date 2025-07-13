@@ -24,7 +24,7 @@ export default async function Home() {
   return (
     <div>
       <div className="w-11/12 mx-auto flex flex-col items-center mb-8">
-        <h1 className={`${dancing_script.variable} font-sans text-3xl mb-8 border-b-2 text-center md:text-4xl`}>
+        <h1 className={`${dancing_script.variable} font-sans text-3xl mb-16 border-b-2 text-center md:text-4xl lg:text-5xl`}>
           Custom upholstery & soft goods for your home
         </h1>
         <div className="flex justify-center w-full">
