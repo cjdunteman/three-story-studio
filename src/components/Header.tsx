@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon } from "@heroicons/react/24/outline"
 
@@ -14,10 +15,11 @@ export default function Header() {
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <img
+            <Image
               src="/3SS_logo_transparent.png"
-              className="h-32 w-auto"
               alt="Three Story Studio Logo"
+              width={142}
+              height={0}
             />
           </a>
         </div>
