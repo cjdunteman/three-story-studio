@@ -27,19 +27,21 @@ export default async function Home() {
         <h1 className={`${dancing_script.variable} font-sans text-3xl mb-8 border-b-2 text-center md:text-4xl`}>
           Custom upholstery & soft goods for your home
         </h1>
-        <div className="flex overflow-x-auto max-w-7xl scrollbar-hide px-4 md:px-10 gap-4 snap-x snap-mandatory items-center w-full">
-          {images.docs.map(({id, url, alt}) => (
-            <div key={id} className="relative min-w-[300px] h-[400px] flex items-center justify-center flex-shrink-0 break-inside-avoid snap-center">
-              <Image
-                src={url!}
-                alt={alt}
-                fill
-                style={{ objectFit: 'cover' }}
-                sizes="(min-width: 808px) 300px, 100vw"
-                className="object-cover rounded-lg shadow-md"
-              />
-            </div>
-          ))}
+        <div className="flex justify-center w-full">
+          <div className="flex overflow-x-auto max-w-7xl scrollbar-hide px-4 md:px-10 gap-4 snap-x snap-mandatory items-center">
+            {images.docs.map(({id, url, alt}) => (
+              <div key={id} className="relative min-w-[300px] h-[400px] flex items-center justify-center flex-shrink-0 snap-center">
+                <Image
+                  src={url!}
+                  alt={alt}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(min-width: 808px) 300px, 100vw"
+                  className="object-cover rounded-lg shadow-md"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <section className="py-20 bg-taupe px-8">
