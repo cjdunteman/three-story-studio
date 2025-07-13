@@ -9,7 +9,7 @@ export default function Footer() {
 
     return (
         <footer className="bg-gradient-to-b from-taupe-light to-taupe px-8 py-12">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
                 {/* Logo Column */}
                 <div>
                     <Image
@@ -46,14 +46,17 @@ export default function Footer() {
                 {/* Contact Column */}
                 <div>
                     <h3 className="text-2xl md:text-3xl font-bold mb-4">Contact</h3>
-                    <div className="space-y-4">
-                        <a 
-                            href="mailto:kristin@threestorystudio.com"
-                            className="bg-sage hover:bg-sage-dark text-gray-800 px-4 py-3 rounded transition-colors text-xl md:text-2xl"
-                        >
-                            Send an Email
-                        </a>
-                        <div className="flex space-x-4 mt-4">
+                    <p className="text-xl md:text-2xl mb-4">Reach out directly to discuss your upholstery project with me!</p>
+                    <div>
+                        <div className="mt-6">                        
+                            <a 
+                                href="mailto:kristin@threestorystudio.com"
+                                className="bg-sage hover:bg-sage-dark text-gray-800 px-4 py-3 rounded transition-colors text-xl md:text-2xl"
+                            >
+                                Send an Email
+                            </a>
+                        </div>
+                        <div className="flex space-x-4 mt-8">
                             <a href="https://www.linkedin.com/in/kristin-dunteman-1197aa72/" target="_blank" rel="noopener noreferrer">
                                 <Image
                                     src={linkedin}
@@ -81,6 +84,11 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <hr className="my-8 border-gray-300" />
+            <div className="text-center mt-8 text-gray-600">
+                <p className="text-lg md:text-xl">&copy; {currentYear} Three Story Studio. All rights reserved.</p>
+                {/* <p className="text-sm md:text-base">Website by <a href="https://www.cjdunteman.com" target="_blank" rel="noopener noreferrer" className="text-gray-800 hover:underline">C.J. Dunteman</a></p> */}
             </div>
         </footer>
     )
