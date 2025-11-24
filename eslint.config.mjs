@@ -1,3 +1,5 @@
+import { defineConfig } from 'eslint/config'
+import nextPlugin from '@next/eslint-plugin-next'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
@@ -9,7 +11,7 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
-const eslintConfig = [
+const eslintConfig = defineConfig([
   ...compat.extends('next/typescript'),
   {
     rules: {
@@ -30,6 +32,15 @@ const eslintConfig = [
       ],
     },
   },
-]
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+    },
+  },
+])
 
 export default eslintConfig
