@@ -25,12 +25,12 @@
     "cross-env": "^7.0.3",
     "eslint-config-next": "16.1.4",
     "graphql": "^16.8.1",
-    "next": "16.1.6",
+    "next": "16.3.1",
     "payload": "^3.75.0",
-    "posthog-js": "^1.259.0",
+    "posthog-js": "^1.417.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sharp": "0.32.6"
+    "sharp": "0.35.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
