@@ -10,3 +10,8 @@ updates:
       timezone: America/Chicago
     commit-message:
       prefix: "chore(deps)"
+    groups:
+      payload:
+        patterns:
+          - "payload"
+          - "@payloadcms/"
