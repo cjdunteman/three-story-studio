@@ -20,10 +20,15 @@ export default async function Page() {
     return (
         <>
             <div className="container mx-auto columns-1 sm:columns-2 lg:columns-4 gap-8 max-w-6xl px-10 mb-12">
-                {images.docs.map(({id, url, alt, project, width: originalWidth, height: originalHeight})=> (
+                {images.docs.map(({id, url, alt, project, width: originalWidth, height: originalHeight}, index)=> {
+                    // Keep the first few images available for the initial viewport while
+                    // deferring the rest. This avoids competing requests for a long gallery.
+                    const isInitialViewport = index < 4
+
+                    return (
                     <div 
                         key={id} 
-                        className="mb-4 break-inside-avoid group relative"
+                        className="mb-4 break-inside-avoid group relative [content-visibility:auto] [contain-intrinsic-size:480px]"
                         style={{ 
                             aspectRatio: originalWidth && originalHeight ? `${originalWidth}/${originalHeight}` : 'auto' 
                         }} // Preserve aspect ratio to prevent shifts
@@ -35,6 +40,8 @@ export default async function Page() {
                                     alt={alt} 
                                     fill={true}
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                    loading={isInitialViewport ? 'eager' : 'lazy'}
+                                    fetchPriority={isInitialViewport ? 'high' : 'auto'}
                                     className="object-cover" 
                                 />
                                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
@@ -49,11 +56,14 @@ export default async function Page() {
                                 alt={alt} 
                                 fill={true}
                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                loading={isInitialViewport ? 'eager' : 'lazy'}
+                                fetchPriority={isInitialViewport ? 'high' : 'auto'}
                                 className="object-cover" 
                             />
                         )}
                     </div>
-                ))}
+                    )
+                })}
             </div>
         </>
     )
