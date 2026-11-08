@@ -41,7 +41,7 @@ const social = [
 				{
 					links.map((link) => (
 						<li>
-							<a href={link.href} class="text-xl md:text-2xl hover:text-gray-700">
+							<a href={link.href} class="text-xl md:text-2xl underline-offset-4 hover:underline">
 								{link.label}
 							</a>
 						</li>
@@ -57,7 +57,7 @@ const social = [
 			<div class="mt-6">
 				<a
 					href="mailto:kristin@threestorystudio.com"
-					class="bg-sage hover:bg-sage-dark text-gray-800 px-4 py-3 rounded transition-colors text-xl md:text-2xl"
+					class="brand-button px-4 py-3 rounded text-xl md:text-2xl"
 				>
 					Send an Email
 				</a>
@@ -73,8 +73,8 @@ const social = [
 			</div>
 		</div>
 	</div>
-	<hr class="my-8 border-gray-300" />
-	<div class="text-center mt-8 text-gray-600">
+	<hr class="my-8 border-line" />
+	<div class="text-center mt-8 text-ink">
 		<p class="text-lg md:text-xl">&copy; {year} Three Story Studio. All rights reserved.</p>
 	</div>
 </footer>
