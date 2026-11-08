@@ -2,6 +2,7 @@ import cloudflare from "@astrojs/cloudflare";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import { d1, r2 } from "@emdash-cms/cloudflare";
+import { cloudflareEmail } from "@emdash-cms/cloudflare/plugins";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, sessionDrivers } from "astro/config";
 import emdash, { local } from "emdash/astro";
@@ -58,6 +59,21 @@ export default defineConfig({
 					}),
 			// On Cloudflare, leave this unset so EMDASH_SITE_URL is read at runtime.
 			...(!cloudflareBuild && siteUrl ? { siteUrl } : {}),
+			// Local Node has no send_email binding. Production mail goes out
+			// through Cloudflare Email Sending.
+			...(cloudflareBuild
+				? {
+						plugins: [
+							cloudflareEmail({
+								binding: "EMAIL",
+								from: {
+									email: "noreply@mail.threestorystudio.com",
+									name: "Three Story Studio",
+								},
+							}),
+						],
+					}
+				: {}),
 		}),
 	],
 	devToolbar: { enabled: false },
