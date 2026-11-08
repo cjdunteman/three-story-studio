@@ -17,16 +17,12 @@ That local database is not the production D1 database. Pieces created here do no
 
 ## Content
 
-Two collections replace the Payload model:
-
-- **Projects** have a name. Paste the old numeric Payload id into **Previous Payload id** if an existing `/projects/123` URL should keep working. EmDash redirects that address to the new slug.
+- **Projects** have a name. **Previous project id** keeps an old numeric `/projects/123` address working. The site redirects that address to the project's slug.
 - **Pieces** are the photos. **Showcase** is the image shown on the gallery. A published piece with a showcase image appears on the gallery. Check **Home page slideshow** to include it on the home page, and set **Project slug** to the project's URL slug (the last part of `/projects/that-slug`) when the gallery image should open a project.
 
 New projects and pieces are drafts. Publish them before they appear on the site.
 
-Home, gallery, and about copy stays in the page templates, the same way it lived in the Next.js pages.
-
-The old Payload tables are not deleted. EmDash creates its own tables. Photos already in the bucket are not imported automatically, so add the pieces again in the new admin.
+Home, gallery, and about copy stays in the page templates.
 
 ## Cloudflare
 

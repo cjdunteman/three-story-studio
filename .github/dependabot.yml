@@ -10,17 +10,6 @@ updates:
       timezone: America/Chicago
     commit-message:
       prefix: "chore(deps)"
-    groups:
-      payload:
-        patterns:
-          - "payload"
-          - "@payloadcms/"
-      other:
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "payload"
-          - "@payloadcms/"
     ignore:
       # For all packages, ignore all patch updates
       - dependency-name: '*'

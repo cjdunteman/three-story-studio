@@ -12,9 +12,10 @@
 # testing
 /coverage
 
-# next.js
+# leftover local build output
 /.next/
 /out/
+.vercel/
 
 # astro
 /dist/
@@ -45,7 +46,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 .env
 

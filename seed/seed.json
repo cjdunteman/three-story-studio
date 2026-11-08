@@ -29,7 +29,7 @@
 				},
 				{
 					"slug": "legacy_id",
-					"label": "Previous Payload id",
+					"label": "Previous project id",
 					"type": "string",
 					"indexed": true
 				}
