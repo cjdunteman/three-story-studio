@@ -10,7 +10,7 @@ for (const hint of cacheHints) {
 
 const slides = error
 	? []
-	: entries.filter((entry) => isFlagOn(entry.data.show_on_home) && entry.data.image?.id);
+	: entries.filter((entry) => isFlagOn(entry.data.show_on_home) && entry.data.showcase?.id);
 ---
 
 <Base>
@@ -25,13 +25,13 @@ const slides = error
 						slides.map((piece, index) => (
 							<div class="cover-frame relative min-w-[300px] h-[400px] flex-shrink-0 snap-center">
 								<Image
-									image={piece.data.image}
+									image={piece.data.showcase}
 									priority={index === 0}
 									loading={index === 0 ? "eager" : "lazy"}
 									fetchpriority={index === 0 ? "high" : "low"}
 									sizes="(min-width: 808px) 300px, 100vw"
 									class="rounded-lg shadow-md"
-									alt={piece.data.image?.alt || piece.data.title}
+									alt={piece.data.showcase?.alt || piece.data.title}
 								/>
 							</div>
 						))

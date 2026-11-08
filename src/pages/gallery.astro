@@ -1,23 +1,21 @@
 ---
 import { Image } from "emdash/ui";
 import Base from "../layouts/Base.astro";
-import { isFlagOn, loadPieces } from "../lib/content";
+import { loadPieces } from "../lib/content";
 
 const { entries, cacheHints, error } = await loadPieces();
 for (const hint of cacheHints) {
 	if (Astro.cache?.enabled) Astro.cache.set(hint);
 }
 
-const pieces = error
-	? []
-	: entries.filter((entry) => isFlagOn(entry.data.finished_piece) && entry.data.image?.id);
+const pieces = error ? [] : entries.filter((entry) => entry.data.showcase?.id);
 ---
 
 <Base title="Gallery — Three Story Studio">
 	<div class="container mx-auto columns-1 sm:columns-2 lg:columns-4 gap-8 max-w-6xl px-10 mb-12">
 		{
 			pieces.map((piece, index) => {
-				const image = piece.data.image;
+				const image = piece.data.showcase;
 				const width = image?.width;
 				const height = image?.height;
 				const projectSlug = typeof piece.data.project_slug === "string" ? piece.data.project_slug : "";
@@ -55,7 +53,7 @@ const pieces = error
 	</div>
 	{
 		pieces.length === 0 && (
-			<p class="max-w-3xl mx-auto px-10 pb-16 text-xl">Finished pieces will show up here once they are added in the studio admin.</p>
+			<p class="max-w-3xl mx-auto px-10 pb-16 text-xl">Pieces show up here once they are published with a showcase image.</p>
 		)
 	}
 </Base>

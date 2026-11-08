@@ -44,14 +44,20 @@
 			"fields": [
 				{
 					"slug": "title",
-					"label": "Title",
+					"label": "Name",
 					"type": "string",
 					"required": true,
 					"searchable": true
 				},
 				{
-					"slug": "image",
-					"label": "Image",
+					"slug": "description",
+					"label": "Description",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "showcase",
+					"label": "Showcase",
 					"type": "image",
 					"required": true
 				},

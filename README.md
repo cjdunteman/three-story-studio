@@ -20,7 +20,7 @@ Copy `.env.example` when you want the dev server to use the hosted database and 
 Two collections replace the Payload model:
 
 - **Projects** have a name. Paste the old numeric Payload id into **Previous Payload id** if an existing `/projects/123` URL should keep working. EmDash redirects that address to the new slug.
-- **Pieces** are the photos. Check **Home page slideshow** or **Finished piece**, and set **Project slug** to the project's URL slug (the last part of `/projects/that-slug`) when the gallery image should open a project.
+- **Pieces** are the photos. **Showcase** is the image shown on the gallery. A published piece with a showcase image appears on the gallery. Check **Home page slideshow** to include it on the home page, and set **Project slug** to the project's URL slug (the last part of `/projects/that-slug`) when the gallery image should open a project.
 
 New projects and pieces are drafts. Publish them before they appear on the site.
 

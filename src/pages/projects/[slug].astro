@@ -20,7 +20,7 @@ for (const hint of cacheHints) {
 }
 
 const images = entries.filter(
-	(entry) => entry.data.project_slug === project.data.slug && entry.data.image?.id,
+	(entry) => entry.data.project_slug === project.data.slug && entry.data.showcase?.id,
 );
 ---
 
@@ -32,8 +32,8 @@ const images = entries.filter(
 				images.map((piece) => (
 					<div class="break-inside-avoid">
 						<Image
-							image={piece.data.image}
-							alt={piece.data.image?.alt || piece.data.title}
+							image={piece.data.showcase}
+							alt={piece.data.showcase?.alt || piece.data.title}
 							class="w-full object-cover"
 							sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
 						/>
