@@ -40,6 +40,7 @@
 			"label": "Pieces",
 			"labelSingular": "Piece",
 			"titleField": "title",
+			"urlPattern": "/pieces/{slug}",
 			"supports": ["drafts", "revisions", "search"],
 			"fields": [
 				{
@@ -60,6 +61,17 @@
 					"label": "Showcase",
 					"type": "image",
 					"required": true
+				},
+				{
+					"slug": "photos",
+					"label": "More photos",
+					"type": "repeater",
+					"validation": {
+						"subFields": [
+							{ "slug": "image", "label": "Photo", "type": "image", "required": true },
+							{ "slug": "caption", "label": "Caption", "type": "string" }
+						]
+					}
 				},
 				{
 					"slug": "show_on_home",

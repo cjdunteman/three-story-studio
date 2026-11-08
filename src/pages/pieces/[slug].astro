@@ -1,0 +1,96 @@
+---
+import { getEmDashEntry } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import { additionalPhotos, loadProject, projectPath } from "../../lib/content";
+
+const slug = Astro.params.slug;
+if (!slug) return Astro.rewrite("/404");
+
+const { entry: piece, cacheHint } = await getEmDashEntry("pieces", slug);
+if (cacheHint && Astro.cache?.enabled) Astro.cache.set(cacheHint);
+if (!piece) return Astro.rewrite("/404");
+
+const photos = additionalPhotos(piece.data);
+if (photos.length === 0) return Astro.rewrite("/404");
+
+const showcase = piece.data.showcase?.id ? piece.data.showcase : undefined;
+const description = typeof piece.data.description === "string" ? piece.data.description.trim() : "";
+const projectSlug = typeof piece.data.project_slug === "string" ? piece.data.project_slug.trim() : "";
+let projectTitle = "";
+let projectHref = "";
+
+if (projectPath(projectSlug)) {
+	const projectResult = await loadProject(projectSlug);
+	if (projectResult.cacheHint && Astro.cache?.enabled) Astro.cache.set(projectResult.cacheHint);
+	if (projectResult.entry) {
+		projectTitle = projectResult.entry.data.title;
+		projectHref = `/projects/${projectResult.entry.id}`;
+	}
+}
+---
+
+<Base title={`${piece.data.title} — Three Story Studio`} description={description || undefined}>
+	<article class="mx-auto max-w-5xl px-6 pb-20 md:px-10">
+		<p class="mb-8 text-xl">
+			{
+				projectHref && (
+					<>
+						<span aria-hidden="true"> / </span>
+						<a href={projectHref} class="underline decoration-1 underline-offset-4">
+							{projectTitle}
+						</a>
+					</>
+				)
+			}
+		</p>
+		<h1 class="font-script mb-6 text-4xl leading-tight md:text-6xl" {...piece.edit.title}>
+			{piece.data.title}
+		</h1>
+		{
+			description && (
+				<p class="max-w-3xl text-xl whitespace-pre-line md:text-2xl" {...piece.edit.description}>
+					{description}
+				</p>
+			)
+		}
+		<div class="mt-12 flex flex-col gap-14" {...piece.edit.photos}>
+			{
+				showcase && (
+					<figure class="m-0" {...piece.edit.showcase}>
+						<Image
+							image={showcase}
+							alt={showcase.alt || piece.data.title}
+							class="w-full h-auto"
+							sizes="(min-width: 1024px) 960px, 100vw"
+							priority
+							loading="eager"
+							fetchpriority="high"
+						/>
+						{showcase.caption && <figcaption class="mt-3 text-lg">{showcase.caption}</figcaption>}
+					</figure>
+				)
+			}
+			{
+				photos.map((photo, index) => {
+					const caption = photo.caption || photo.image.caption?.trim() || "";
+					const first = !showcase && index === 0;
+					return (
+						<figure class="m-0">
+							<Image
+								image={photo.image}
+								alt={photo.image.alt || caption || piece.data.title}
+								class="w-full h-auto"
+								sizes="(min-width: 1024px) 960px, 100vw"
+								priority={first}
+								loading={first ? "eager" : "lazy"}
+								fetchpriority={first ? "high" : undefined}
+							/>
+							{caption && <figcaption class="mt-3 text-lg">{caption}</figcaption>}
+						</figure>
+					);
+				})
+			}
+		</div>
+	</article>
+</Base>

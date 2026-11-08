@@ -9,6 +9,67 @@ export function isFlagOn(value: unknown): boolean {
 
 type PieceEntry = Awaited<ReturnType<typeof getEmDashCollection<"pieces">>>["entries"][number];
 
+type PhotoImage = {
+	id: string;
+	src?: string;
+	alt?: string;
+	caption?: string;
+	width?: number;
+	height?: number;
+};
+
+export type PiecePhoto = {
+	image: PhotoImage;
+	caption: string;
+};
+
+function isPhotoImage(value: unknown): value is PhotoImage {
+	return (
+		typeof value === "object" &&
+		value !== null &&
+		typeof (value as PhotoImage).id === "string" &&
+		(value as PhotoImage).id.length > 0
+	);
+}
+
+/** Photos on the piece page, other than the gallery showcase. */
+export function additionalPhotos(data: {
+	showcase?: { id?: string } | null;
+	photos?: unknown;
+}): PiecePhoto[] {
+	const rows = Array.isArray(data.photos) ? data.photos : [];
+	const showcaseId = typeof data.showcase?.id === "string" ? data.showcase.id : "";
+	const photos: PiecePhoto[] = [];
+
+	for (const row of rows) {
+		if (!row || typeof row !== "object") continue;
+		const record = row as { image?: unknown; caption?: unknown };
+		if (!isPhotoImage(record.image) || record.image.id === showcaseId) continue;
+		photos.push({
+			image: record.image,
+			caption: typeof record.caption === "string" ? record.caption.trim() : "",
+		});
+	}
+
+	return photos;
+}
+
+/** Public piece URL when the piece has photos beyond the showcase. */
+export function piecePagePath(piece: {
+	id: string;
+	data: { showcase?: { id?: string } | null; photos?: unknown };
+}): string {
+	if (!piece.id || additionalPhotos(piece.data).length === 0) return "";
+	return `/pieces/${piece.id}`;
+}
+
+export function projectPath(slug: unknown): string {
+	if (typeof slug !== "string") return "";
+	const trimmed = slug.trim();
+	if (!trimmed || trimmed.includes("/") || trimmed.includes("\\")) return "";
+	return `/projects/${trimmed}`;
+}
+
 export async function loadPieces() {
 	const entries: PieceEntry[] = [];
 	const cacheHints: CacheHint[] = [];

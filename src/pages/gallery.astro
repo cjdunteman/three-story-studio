@@ -1,7 +1,8 @@
 ---
 import { Image } from "emdash/ui";
+import PieceLink from "../components/PieceLink.astro";
 import Base from "../layouts/Base.astro";
-import { loadPieces } from "../lib/content";
+import { loadPieces, piecePagePath, projectPath } from "../lib/content";
 
 const { entries, cacheHints, error } = await loadPieces();
 for (const hint of cacheHints) {
@@ -18,9 +19,9 @@ const pieces = error ? [] : entries.filter((entry) => entry.data.showcase?.id);
 				const image = piece.data.showcase;
 				const width = image?.width;
 				const height = image?.height;
-				const projectSlug = typeof piece.data.project_slug === "string" ? piece.data.project_slug : "";
+				const href = piecePagePath(piece) || projectPath(piece.data.project_slug);
 				const frame = {
-					class: "cover-frame mb-4 break-inside-avoid group relative [content-visibility:auto] [contain-intrinsic-size:480px]",
+					class: "cover-frame mb-4 break-inside-avoid relative [content-visibility:auto] [contain-intrinsic-size:480px]",
 					style: width && height ? `aspect-ratio: ${width} / ${height}` : undefined,
 				};
 				const photo = (
@@ -34,16 +35,11 @@ const pieces = error ? [] : entries.filter((entry) => entry.data.showcase?.id);
 						alt={image?.alt || piece.data.title}
 					/>
 				);
-				return projectSlug ? (
+				return href ? (
 					<div {...frame}>
-						<a href={`/projects/${projectSlug}`} class="block relative h-full">
+						<PieceLink href={href} class="h-full">
 							{photo}
-							<div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-								<span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-black px-4 py-2 rounded-md font-medium">
-									View More
-								</span>
-							</div>
-						</a>
+						</PieceLink>
 					</div>
 				) : (
 					<div {...frame}>{photo}</div>

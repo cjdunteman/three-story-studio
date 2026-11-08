@@ -1,7 +1,8 @@
 ---
 import { Image } from "emdash/ui";
+import PieceLink from "../../components/PieceLink.astro";
 import Base from "../../layouts/Base.astro";
-import { loadPieces, loadProject } from "../../lib/content";
+import { loadPieces, loadProject, piecePagePath } from "../../lib/content";
 
 const slug = Astro.params.slug;
 if (!slug) return Astro.rewrite("/404");
@@ -29,16 +30,22 @@ const images = entries.filter(
 		<h1 class="text-3xl font-bold mb-8">{project.data.title}</h1>
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			{
-				images.map((piece) => (
-					<div class="break-inside-avoid">
+				images.map((piece) => {
+					const href = piecePagePath(piece);
+					const photo = (
 						<Image
 							image={piece.data.showcase}
 							alt={piece.data.showcase?.alt || piece.data.title}
 							class="w-full object-cover"
 							sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
 						/>
-					</div>
-				))
+					);
+					return (
+						<div class="break-inside-avoid">
+							{href ? <PieceLink href={href}>{photo}</PieceLink> : photo}
+						</div>
+					);
+				})
 			}
 		</div>
 	</div>

@@ -18,9 +18,12 @@ That local database is not the production D1 database. Pieces created here do no
 ## Content
 
 - **Projects** have a name. **Previous project id** keeps an old numeric `/projects/123` address working. The site redirects that address to the project's slug.
-- **Pieces** are the photos. **Showcase** is the image shown on the gallery. A published piece with a showcase image appears on the gallery. Check **Home page slideshow** to include it on the home page, and set **Project slug** to the project's URL slug (the last part of `/projects/that-slug`) when the gallery image should open a project.
+- **Pieces** are the works. **Showcase** is the image shown on the gallery. A published piece with a showcase image appears on the gallery. Check **Home page slideshow** to include it on the home page, and set **Project slug** to the project's URL slug (the last part of `/projects/that-slug`) when the gallery image should open a project.
+- **More photos** are the other images of that piece. When at least one of them is different from the showcase, the piece has its own page at `/pieces/{slug}`. Hovering that image in the gallery shows **View More**, which opens the piece page. A piece that also has a project slug still opens its own page when it has more photos. The project page does the same for those images.
 
 New projects and pieces are drafts. Publish them before they appear on the site.
+
+An existing database does not pick up later edits to `seed/seed.json` on its own. After this field was added, the local database was updated with `npx emdash seed seed/seed.json --no-content --skip-media --on-conflict=update`. Deploying does not add **More photos** to production. Add that field under **Content Types → Pieces** on the production site, with a photo sub-field and an optional caption, before editors can fill it in.
 
 Home, gallery, and about copy stays in the page templates.
 
