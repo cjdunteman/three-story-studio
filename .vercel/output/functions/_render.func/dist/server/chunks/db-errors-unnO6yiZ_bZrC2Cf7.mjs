@@ -1,0 +1,62 @@
+// node_modules/emdash/dist/db-errors-unnO6yiZ.mjs
+/**
+* Shared detection helpers for database-layer error messages.
+*
+* Different SQL dialects phrase "table or relation does not exist" differently:
+*
+* - SQLite / D1:    "no such table: foo"
+* - PostgreSQL:     'relation "foo" does not exist'
+*                   'table "foo" does not exist'
+* - MySQL (future): "Table 'db.foo' doesn't exist"
+*
+* Runtime code paths that short-circuit on missing tables (pre-migration
+* probes, optional feature tables, etc.) should use these helpers rather
+* than hand-rolling string matches per call-site.
+*/
+/**
+* Extract a lowercase error message from any unknown value, safely.
+*/
+function messageOf(error) {
+	if (error instanceof Error) return error.message.toLowerCase();
+	if (typeof error === "string") return error.toLowerCase();
+	return "";
+}
+/**
+* Returns true when `error` is a "column does not exist" error.
+* Used to handle where filters that reference non-existent field names
+* gracefully (return empty results) instead of propagating a SQL error.
+* When `column` is given, only errors naming that column match.
+*/
+function isMissingColumnError(error, column) {
+	const message = messageOf(error);
+	if (!message) return false;
+	if (column && !message.includes(column.toLowerCase())) return false;
+	if (message.includes("no such column")) return true;
+	if (message.includes("does not exist") && message.includes("column") && !message.includes("relation")) return true;
+	return false;
+}
+var SQLITE_MISSING_COLUMN_RE = /\bno such column:\s*([^:\r\n]+?)(?= - should this be a string literal in single-quotes\?|:|$)/;
+var POSTGRES_MISSING_COLUMN_RE = /\bcolumn\s+(.+?)\s+does not exist\b/;
+var COLUMN_IDENTIFIER_RE = /^(?:"[a-z_][a-z0-9_]*"|[a-z_][a-z0-9_]*)(?:\.(?:"[a-z_][a-z0-9_]*"|[a-z_][a-z0-9_]*))?$/;
+/** The missing column, including its qualifier if present, normalized for comparison. */
+function getMissingColumnIdentifier(error) {
+	const message = messageOf(error);
+	const identifier = SQLITE_MISSING_COLUMN_RE.exec(message)?.[1] ?? POSTGRES_MISSING_COLUMN_RE.exec(message)?.[1];
+	if (!identifier || !COLUMN_IDENTIFIER_RE.test(identifier.trim())) return void 0;
+	return identifier.trim().replaceAll("\"", "");
+}
+/**
+* Returns true when `error` is a "table does not exist" error across the
+* dialects EmDash supports (D1/SQLite and PostgreSQL). Used by runtime
+* probes to treat pre-migration databases as empty without logging a scary
+* warning, while still propagating unrelated errors (permissions, connection
+* loss, syntax issues) to callers.
+*/
+function isMissingTableError(error) {
+	const message = messageOf(error);
+	if (!message) return false;
+	if (message.includes("no such table")) return true;
+	if (message.includes("does not exist") || message.includes("doesn't exist")) return message.includes("relation") || message.includes("table");
+	return false;
+}
+export { isMissingColumnError as n, isMissingTableError as r, getMissingColumnIdentifier as t };

@@ -1,0 +1,35 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "three-story-studio",
+	"main": "./src/worker.ts",
+	// Node.js compatibility is on by default for dates on or after 2026-08-04.
+	// The flag stays explicit so process.env is populated for EmDash secrets.
+	"compatibility_date": "2026-11-08",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "three-story-studio",
+			"database_id": "bb67baac-0e6b-49fa-89e9-727781c4a279"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "three-story-studio-media"
+		}
+	],
+	"images": {
+		"binding": "IMAGES"
+	},
+	"triggers": {
+		"crons": [
+			"* * * * *"
+		]
+	},
+	"observability": {
+		"enabled": true
+	}
+}

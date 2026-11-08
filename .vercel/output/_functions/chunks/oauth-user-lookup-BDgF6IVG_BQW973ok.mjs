@@ -1,0 +1,23 @@
+import { i as toRoleLevel } from "./types-ndj-bYfi_AO2tfJCj.mjs";
+import "./dist_BZHQodRU.mjs";
+// node_modules/emdash/dist/oauth-user-lookup-BDgF6IVG.mjs
+/**
+* Shared user lookup for OAuth token operations.
+*
+* Extracts user role and disabled status from the database. Used by
+* handleTokenRefresh() to revalidate scopes against the user's current
+* role and reject disabled users.
+*/
+/**
+* Look up a user's current role and disabled status.
+* Returns null if the user doesn't exist.
+*/
+async function lookupUserRoleAndStatus(db, userId) {
+	const row = await db.selectFrom("users").select(["role", "disabled"]).where("id", "=", userId).executeTakeFirst();
+	if (!row) return null;
+	return {
+		role: toRoleLevel(row.role),
+		disabled: row.disabled === 1
+	};
+}
+export { lookupUserRoleAndStatus as t };

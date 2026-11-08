@@ -1,0 +1,79 @@
+import { t as __exportAll } from "./rolldown-runtime_BJohB4LM.mjs";
+import { t as after } from "./after-32yNRvd2_BC9LTfYL.mjs";
+import "./base64-BQBZwXCx_BV9EFKF5.mjs";
+import "./object-cache-DmKr09La_Bod48Br5.mjs";
+import "./request-cache-5z2WzWmh_BCAj1LTl.mjs";
+import "./url-DTfGDJhI_CrwsbJIk.mjs";
+import "./types-DwhEvIVb_72TX_YGi.mjs";
+import "./resolve-DdNXBJSr_RO5X_pmi.mjs";
+import "./byline-registry-BhzpO41z_BKQLJtvw.mjs";
+import { t as BylineRepository } from "./byline-DHJS-GGb_D9_UHvtn.mjs";
+import "./loader-DhnedqY4_acPNZ9Ax.mjs";
+import "./errors-B4f4It-2_rwT1g5LA.mjs";
+import "./errors-8gJqv-XV_DxVJguuk.mjs";
+import "./settings-Dd1uivmQ_8f9uEka3.mjs";
+import "./site-settings-DRHfX7bq_BNGJ-4Xq.mjs";
+import { a as unwrapResult, i as requireDb, r as handleError, t as apiError } from "./error-BCMgPxdn_BlGqXbZb.mjs";
+import { n as parseBody, t as isParseError } from "./parse-B_b6gZxG_Bn1jZ3l7.mjs";
+import "./menus-uEAxWAm1_Ch7-np7t.mjs";
+import { c as bylineTranslationCreateBody } from "./entry-lock-CRVmruM0_6CQdq_uc.mjs";
+import "./comments-yiRFx3w5_D_KnyClv.mjs";
+import "./byline-fields-CiR8FvvF_C1YDvZd8.mjs";
+import "./schemas_Ct6e_W-S.mjs";
+import "./credits-BKREepht_BTl2HLL3.mjs";
+import "./bylines-f_ZEc6Sn_DAxvCrSG.mjs";
+import { o as requirePerm } from "./authorize-NJgp8kLI_CP_Uj0OQ.mjs";
+import { n as handleBylineCreate, r as handleBylineTranslations } from "./bylines-Bsg5cH4S_Doo6VLtC.mjs";
+// node_modules/emdash/dist/astro/routes/api/admin/bylines/_id_/translations.mjs
+var translations_exports = /* @__PURE__ */ __exportAll({
+	GET: () => GET,
+	POST: () => POST,
+	prerender: () => false
+});
+var GET = async ({ params, locals }) => {
+	const { emdash, user } = locals;
+	const id = params.id;
+	const dbErr = requireDb(emdash?.db);
+	if (dbErr) return dbErr;
+	const denied = requirePerm(user, "bylines:read");
+	if (denied) return denied;
+	try {
+		return unwrapResult(await handleBylineTranslations(emdash.db, id));
+	} catch (error) {
+		return handleError(error, "Failed to fetch byline translations", "BYLINE_TRANSLATIONS_ERROR");
+	}
+};
+var POST = async ({ params, request, locals }) => {
+	const { emdash, user } = locals;
+	const id = params.id;
+	const dbErr = requireDb(emdash?.db);
+	if (dbErr) return dbErr;
+	const denied = requirePerm(user, "bylines:manage");
+	if (denied) return denied;
+	try {
+		const body = await parseBody(request, bylineTranslationCreateBody);
+		if (isParseError(body)) return body;
+		const source = await new BylineRepository(emdash.db).findById(id);
+		if (!source) return apiError("NOT_FOUND", "Byline not found", 404);
+		const result = await handleBylineCreate(emdash.db, {
+			slug: body.slug ?? source.slug,
+			displayName: body.displayName ?? source.displayName,
+			bio: body.bio ?? null,
+			avatarMediaId: body.avatarMediaId ?? source.avatarMediaId,
+			websiteUrl: body.websiteUrl ?? source.websiteUrl,
+			isGuest: source.isGuest,
+			locale: body.locale,
+			translationOf: id
+		});
+		if (result.success) {
+			const byline = result.data;
+			after(() => emdash.hooks.runBylineAfterSave(byline, true));
+		}
+		return unwrapResult(result, 201);
+	} catch (error) {
+		return handleError(error, "Failed to create byline translation", "BYLINE_TRANSLATION_CREATE_ERROR");
+	}
+};
+// \0virtual:astro:page:node_modules/emdash/dist/astro/routes/api/admin/bylines/_id_/translations@_@mjs
+var page = () => translations_exports;
+export { page };

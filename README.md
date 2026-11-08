@@ -2,7 +2,7 @@
 
 The site for [threestorystudio.com](https://www.threestorystudio.com).
 
-The public pages are Astro. Content is edited in [EmDash](https://emdashcms.com) at `/_emdash/admin`. Production is meant to run on Vercel, with Postgres for content and S3-compatible storage for images.
+The public pages are Astro. Content is edited in [EmDash](https://emdashcms.com) at `/_emdash/admin`. Production runs on Cloudflare Workers. Content is stored in D1, and images are stored in R2.
 
 ## Local development
 
@@ -11,9 +11,9 @@ npm install
 npm run dev
 ```
 
-Without `DATABASE_URL`, the dev server uses a SQLite file at `data.db` and stores uploads in `uploads/`. The admin is at [http://localhost:4321/_emdash/admin](http://localhost:4321/_emdash/admin). The first visit walks through setup and creates the admin account.
+`npm run dev` uses a SQLite file at `data.db` and stores uploads in `uploads/`. The admin is at [http://localhost:4321/_emdash/admin](http://localhost:4321/_emdash/admin). The first visit walks through setup and creates the admin account.
 
-Copy `.env.example` when you want the dev server to use the hosted database and bucket instead.
+That local database is not the production D1 database. Pieces created here do not appear on Cloudflare until they are created again there, or copied over with an EmDash site export and import.
 
 ## Content
 
@@ -28,26 +28,41 @@ Home, gallery, and about copy stays in the page templates, the same way it lived
 
 The old Payload tables are not deleted. EmDash creates its own tables. Photos already in the bucket are not imported automatically, so add the pieces again in the new admin.
 
-## Vercel
+## Cloudflare
 
-The Astro config uses `@astrojs/vercel`. Set these environment variables for Production and Preview, then redeploy:
+The production build uses `@astrojs/cloudflare`. `wrangler.jsonc` names the D1 database `three-story-studio` (binding `DB`) and the R2 bucket `three-story-studio-media` (binding `MEDIA`). The first deploy creates either resource if it does not already exist. Admin sessions use a Workers KV namespace that the Cloudflare adapter adds during the build. A cron trigger runs scheduled publishing.
 
-| Variable | Purpose |
-| --- | --- |
-| `SITE_URL` | Public origin, such as `https://www.threestorystudio.com`. Passkeys and login redirects use it. |
-| `DATABASE_URL` | Postgres connection string. `DATABASE_URI` still works. Use the Supabase pooler on port 6543. |
-| `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | Same media bucket the Payload site used. `S3_REGION` and `S3_PUBLIC_URL` are optional. |
-| `REDIS_URL` | Required for admin login. The Vercel adapter does not store sessions on its own. Upstash Redis is a fit. |
+Node.js 22.23.4 or later is required. Log in once, then build and deploy:
 
-These values are read when Vercel builds the project, so set them before deploying. Vercel runs the built site on Node.js 24.
+```bash
+npx wrangler login
+npm run deploy
+```
+
+Open the `workers.dev` URL Wrangler prints and finish setup at `/_emdash/admin`. The first person to finish setup is the administrator. Passkeys only work on the hostname where they are created, so run setup on the production domain, or set `EMDASH_SITE_URL` to that origin before setup:
+
+```bash
+npx wrangler secret put EMDASH_SITE_URL
+npx wrangler secret put EMDASH_ENCRYPTION_KEY
+```
+
+`EMDASH_ENCRYPTION_KEY` encrypts plugin settings. Generate one with `npx emdash secrets generate`. Do not commit it.
+
+After the Worker responds on `workers.dev`, attach the production domain by adding this to `wrangler.jsonc` and deploying again:
+
+```jsonc
+"routes": [{ "pattern": "www.threestorystudio.com", "custom_domain": true }]
+```
+
+The domain has to be an active domain in the same Cloudflare account.
 
 After setup, the site starts hidden from search engines. Turn that off in the EmDash admin when the new site should be indexed.
 
-Scheduled publishing needs a long-running process. This site does not use it. A Vercel function will not run EmDash's background scheduler between requests.
-
 ## Scripts
 
-- `npm run dev` starts the site.
-- `npm run build` builds the Vercel output.
+- `npm run dev` starts the local site on SQLite.
+- `npm run build` builds the Cloudflare Worker.
+- `npm run preview` serves that build in the Workers runtime.
+- `npm run deploy` builds and runs `wrangler deploy`.
 - `npm run typecheck` runs `astro check`.
 - `npx emdash seed seed/seed.json --validate` checks the schema file.
