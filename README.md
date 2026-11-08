@@ -39,8 +39,6 @@ The Astro config uses `@astrojs/vercel`. Set these environment variables for Pro
 | `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` | Same media bucket the Payload site used. `S3_REGION` and `S3_PUBLIC_URL` are optional. |
 | `REDIS_URL` | Required for admin login. The Vercel adapter does not store sessions on its own. Upstash Redis is a fit. |
 
-`NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST` are still read. `PUBLIC_POSTHOG_KEY` and `PUBLIC_POSTHOG_HOST` work too.
-
 These values are read when Vercel builds the project, so set them before deploying. Vercel runs the built site on Node.js 24.
 
 After setup, the site starts hidden from search engines. Turn that off in the EmDash admin when the new site should be indexed.

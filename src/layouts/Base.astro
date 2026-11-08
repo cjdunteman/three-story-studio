@@ -15,9 +15,6 @@ const {
 	description = "Custom upholstery and soft goods for your home.",
 } = Astro.props;
 
-const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY || process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || process.env.NEXT_PUBLIC_POSTHOG_HOST;
-
 const page = createPublicPageContext({
 	Astro,
 	kind: "custom",
@@ -37,7 +34,7 @@ const page = createPublicPageContext({
 		<link rel="icon" href="/favicon.png" />
 		<EmDashHead page={page} />
 	</head>
-	<body data-posthog-key={posthogKey || undefined} data-posthog-host={posthogHost || undefined}>
+	<body>
 		<EmDashBodyStart page={page} />
 		<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-2">Skip to content</a>
 		<Header />
@@ -46,17 +43,5 @@ const page = createPublicPageContext({
 		</div>
 		<Footer />
 		<EmDashBodyEnd page={page} />
-		<script>
-			import posthog from "posthog-js";
-
-			const key = document.body.dataset.posthogKey;
-			const host = document.body.dataset.posthogHost;
-			if (key) {
-				posthog.init(key, {
-					api_host: host,
-					defaults: "2025-05-24",
-				});
-			}
-		</script>
 	</body>
 </html>

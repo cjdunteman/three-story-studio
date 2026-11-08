@@ -22,7 +22,6 @@
     "emdash": "^1.4.0",
     "invokers-polyfill": "^1.0.4",
     "pg": "^8.16.3",
-    "posthog-js": "^1.259.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
