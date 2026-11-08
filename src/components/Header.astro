@@ -1,0 +1,109 @@
+---
+const links = [
+	{ href: "/", label: "Home" },
+	{ href: "/gallery", label: "Gallery" },
+	{ href: "/about", label: "About" },
+];
+---
+
+<header>
+	<nav aria-label="Global" class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+		<div class="flex lg:flex-1">
+			<a href="/" class="-m-1.5 p-1.5">
+				<img
+					src="/3SS_logo_transparent.png"
+					alt="Three Story Studio Logo"
+					width="142"
+					height="124"
+				/>
+			</a>
+		</div>
+		<div class="flex lg:hidden">
+			<button
+				type="button"
+				command="show-modal"
+				commandfor="mobile-nav"
+				class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+			>
+				<span class="sr-only">Open main menu</span>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+				</svg>
+			</button>
+		</div>
+		<div class="hidden lg:flex lg:gap-x-12">
+			<div class="text-3xl">
+				{
+					links.map((link, index) => (
+						<a
+							href={link.href}
+							class:list={[index < links.length - 1 && "pr-4 border-r mr-4 border-black"]}
+						>
+							{link.label}
+						</a>
+					))
+				}
+			</div>
+		</div>
+		<div class="hidden lg:flex lg:flex-1 lg:justify-end">
+			<a href="mailto:kristin@threestorystudio.com" class="py-2 px-4 rounded text-3xl bg-sage">Inquire</a>
+		</div>
+	</nav>
+	<dialog id="mobile-nav" class="lg:hidden" aria-labelledby="mobile-nav-title" closedby="any">
+		<h2 id="mobile-nav-title" class="sr-only">Menu</h2>
+		<div class="flex flex-row-reverse">
+			<button
+				type="button"
+				command="close"
+				commandfor="mobile-nav"
+				class="-m-2.5 rounded-md p-2.5 text-gray-700"
+			>
+				<span class="sr-only">Close menu</span>
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+				</svg>
+			</button>
+		</div>
+		<div class="flex flex-col gap-8">
+			{
+				links.map((link) => (
+					<a class="text-2xl font-bold" href={link.href}>
+						{link.label}
+					</a>
+				))
+			}
+			<a href="mailto:kristin@threestorystudio.com" class="border-2 py-2 px-2 rounded text-3xl border-light-beige w-fit">
+				Inquire
+			</a>
+		</div>
+	</dialog>
+</header>
+
+<script>
+	if (!("commandForElement" in HTMLButtonElement.prototype)) {
+		await import("invokers-polyfill");
+	}
+
+	// closedby is newer than <dialog>. Clicking the backdrop still closes the menu
+	// where the attribute is ignored.
+	if (!("closedBy" in HTMLDialogElement.prototype)) {
+		const outside = (event: PointerEvent, dialog: HTMLDialogElement) => {
+			const rect = dialog.getBoundingClientRect();
+			return (
+				event.clientX < rect.left ||
+				event.clientX > rect.right ||
+				event.clientY < rect.top ||
+				event.clientY > rect.bottom
+			);
+		};
+		for (const dialog of document.querySelectorAll<HTMLDialogElement>('dialog[closedby="any"]')) {
+			let pressedOutside = false;
+			dialog.addEventListener("pointerdown", (event) => {
+				pressedOutside = outside(event, dialog);
+			});
+			dialog.addEventListener("pointerup", (event) => {
+				if (pressedOutside && outside(event, dialog)) dialog.close();
+			});
+		}
+	}
+</script>

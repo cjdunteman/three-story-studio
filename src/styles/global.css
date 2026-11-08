@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@import "@fontsource/dancing-script/400.css";
+
+@font-face {
+	font-family: "Print Clearly";
+	src: url("/fonts/PrintClearly-GGP.ttf") format("truetype");
+	font-display: swap;
+	font-weight: 400;
+	font-style: normal;
+}
+
+@theme {
+	--color-light-beige: #eee5d7;
+	--color-sage: #c5d1cf;
+	--color-sage-light: #d7e0de;
+	--color-sage-dark: #b3c0be;
+	--color-taupe: #beb19a;
+	--color-taupe-light: #d3cfc4;
+	--color-taupe-dark: #a99d8b;
+	--font-script: "Dancing Script", cursive;
+	--font-body: "Print Clearly", Georgia, serif;
+}
+
+@utility scrollbar-hide {
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	font-family: var(--font-body);
+	color: #111;
+	background: #fff;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+img {
+	max-width: 100%;
+}
+
+dialog:modal {
+	overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+	overflow: hidden;
+	overscroll-behavior: contain;
+	background: rgb(0 0 0 / 0.2);
+}
+
+#mobile-nav[open] {
+	width: min(100%, 24rem);
+	height: 100dvh;
+	max-height: 100dvh;
+	margin: 0 0 0 auto;
+	border: 0;
+	padding: 1.5rem;
+}
+
+.cover-frame img {
+	position: absolute;
+	inset: 0;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

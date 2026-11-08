@@ -1,0 +1,61 @@
+---
+import { Image } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+import { isFlagOn, loadPieces } from "../lib/content";
+
+const { entries, cacheHints, error } = await loadPieces();
+for (const hint of cacheHints) {
+	if (Astro.cache?.enabled) Astro.cache.set(hint);
+}
+
+const pieces = error
+	? []
+	: entries.filter((entry) => isFlagOn(entry.data.finished_piece) && entry.data.image?.id);
+---
+
+<Base title="Gallery — Three Story Studio">
+	<div class="container mx-auto columns-1 sm:columns-2 lg:columns-4 gap-8 max-w-6xl px-10 mb-12">
+		{
+			pieces.map((piece, index) => {
+				const image = piece.data.image;
+				const width = image?.width;
+				const height = image?.height;
+				const projectSlug = typeof piece.data.project_slug === "string" ? piece.data.project_slug : "";
+				const frame = {
+					class: "cover-frame mb-4 break-inside-avoid group relative [content-visibility:auto] [contain-intrinsic-size:480px]",
+					style: width && height ? `aspect-ratio: ${width} / ${height}` : undefined,
+				};
+				const photo = (
+					<Image
+						image={image}
+						priority={index === 0}
+						loading={index < 4 ? "eager" : "lazy"}
+						fetchpriority={index === 0 ? "high" : undefined}
+						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+						class="object-cover"
+						alt={image?.alt || piece.data.title}
+					/>
+				);
+				return projectSlug ? (
+					<div {...frame}>
+						<a href={`/projects/${projectSlug}`} class="block relative h-full">
+							{photo}
+							<div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+								<span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-black px-4 py-2 rounded-md font-medium">
+									View More
+								</span>
+							</div>
+						</a>
+					</div>
+				) : (
+					<div {...frame}>{photo}</div>
+				);
+			})
+		}
+	</div>
+	{
+		pieces.length === 0 && (
+			<p class="max-w-3xl mx-auto px-10 pb-16 text-xl">Finished pieces will show up here once they are added in the studio admin.</p>
+		)
+	}
+</Base>

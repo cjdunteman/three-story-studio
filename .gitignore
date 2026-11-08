@@ -16,6 +16,14 @@
 /.next/
 /out/
 
+# astro
+/dist/
+/.astro/
+/data.db
+/data.db-*
+/uploads/
+/.emdash/
+
 # production
 /build
 

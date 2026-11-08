@@ -1,0 +1,45 @@
+---
+import { Image } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import { loadPieces, loadProject } from "../../lib/content";
+
+const slug = Astro.params.slug;
+if (!slug) return Astro.rewrite("/404");
+
+const projectResult = await loadProject(slug);
+if (projectResult.cacheHint && Astro.cache?.enabled) Astro.cache.set(projectResult.cacheHint);
+if (!projectResult.entry) return Astro.rewrite("/404");
+if ("redirectTo" in projectResult && projectResult.redirectTo) {
+	return Astro.redirect(projectResult.redirectTo, 301);
+}
+
+const project = projectResult.entry;
+const { entries, cacheHints } = await loadPieces();
+for (const hint of cacheHints) {
+	if (Astro.cache?.enabled) Astro.cache.set(hint);
+}
+
+const images = entries.filter(
+	(entry) => entry.data.project_slug === project.data.slug && entry.data.image?.id,
+);
+---
+
+<Base title={`${project.data.title} — Three Story Studio`}>
+	<div class="container mx-auto max-w-6xl px-4 py-8">
+		<h1 class="text-3xl font-bold mb-8">{project.data.title}</h1>
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{
+				images.map((piece) => (
+					<div class="break-inside-avoid">
+						<Image
+							image={piece.data.image}
+							alt={piece.data.image?.alt || piece.data.title}
+							class="w-full object-cover"
+							sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+						/>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</Base>

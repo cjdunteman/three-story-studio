@@ -1,0 +1,62 @@
+---
+import { createPublicPageContext } from "emdash/page";
+import { EmDashBodyEnd, EmDashBodyStart, EmDashHead } from "emdash/ui";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Three Story Studio",
+	description = "Custom upholstery and soft goods for your home.",
+} = Astro.props;
+
+const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY || process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || process.env.NEXT_PUBLIC_POSTHOG_HOST;
+
+const page = createPublicPageContext({
+	Astro,
+	kind: "custom",
+	pageType: "website",
+	title,
+	description,
+});
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="icon" href="/favicon.png" />
+		<EmDashHead page={page} />
+	</head>
+	<body data-posthog-key={posthogKey || undefined} data-posthog-host={posthogHost || undefined}>
+		<EmDashBodyStart page={page} />
+		<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-2">Skip to content</a>
+		<Header />
+		<div id="main">
+			<slot />
+		</div>
+		<Footer />
+		<EmDashBodyEnd page={page} />
+		<script>
+			import posthog from "posthog-js";
+
+			const key = document.body.dataset.posthogKey;
+			const host = document.body.dataset.posthogHost;
+			if (key) {
+				posthog.init(key, {
+					api_host: host,
+					defaults: "2025-05-24",
+				});
+			}
+		</script>
+	</body>
+</html>
