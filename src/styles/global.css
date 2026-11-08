@@ -77,6 +77,44 @@ dialog::backdrop {
 	object-fit: cover;
 }
 
+/* Each photo stays within the viewport. The row holds as many as fit, then wraps. */
+.piece-photos {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 1.5rem;
+	margin-block-start: 3rem;
+	padding-inline: 1.5rem;
+}
+
+@media (min-width: 48rem) {
+	.piece-photos {
+		padding-inline: 2.5rem;
+	}
+}
+
+.piece-photos figure {
+	flex: 0 1 32rem;
+	min-inline-size: 0;
+	max-inline-size: min(100%, 32rem, calc((100dvh - 3rem) * var(--piece-ratio, 0.75)));
+	margin: 0;
+}
+
+.piece-photos img {
+	display: block;
+	inline-size: 100%;
+	block-size: auto;
+	max-block-size: calc(100dvh - 3rem);
+	object-fit: contain;
+}
+
+.piece-photos figcaption {
+	margin-block-start: 0.75rem;
+	text-align: center;
+	overflow-wrap: break-word;
+}
+
 .piece-link {
 	position: relative;
 	display: block;
@@ -141,4 +179,193 @@ dialog::backdrop {
 	.piece-link-label {
 		transition: none;
 	}
+}
+
+.inquiry-steps {
+	margin: 0;
+	padding-inline-start: 1.5em;
+	list-style: decimal;
+}
+
+.inquiry-steps > li + li {
+	margin-block-start: 1.75rem;
+}
+
+.inquiry-points {
+	margin-block-start: 1rem;
+	padding-inline-start: 1.25em;
+	list-style: disc;
+}
+
+.inquiry-points > li + li {
+	margin-block-start: 0.75rem;
+}
+
+.inquiry-form {
+	margin-block-start: 2rem;
+}
+
+.inquiry-field {
+	margin-block-end: 1.5rem;
+}
+
+.inquiry-field legend,
+.inquiry-field > label {
+	display: block;
+	margin-block-end: 0.35rem;
+	font-size: 1.25rem;
+}
+
+.inquiry-required {
+	margin-inline-start: 0.35rem;
+	font-size: 0.9rem;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+.inquiry-optional,
+.inquiry-hint {
+	color: #333;
+	font-size: 1.05rem;
+	line-height: 1.4;
+}
+
+.inquiry-hint {
+	margin-block-end: 0.5rem;
+}
+
+.inquiry-measures {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+	.inquiry-measures {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.inquiry input[type="text"],
+.inquiry input[type="email"],
+.inquiry input[type="tel"],
+.inquiry textarea,
+.inquiry input[type="file"] {
+	display: block;
+	inline-size: 100%;
+	max-inline-size: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	border: 1px solid #a99d8b;
+	border-radius: 0.25rem;
+	background: #fff;
+	color: #111;
+	font: inherit;
+	font-size: 1.25rem;
+	line-height: 1.4;
+}
+
+.inquiry input[type="text"],
+.inquiry input[type="email"],
+.inquiry input[type="tel"],
+.inquiry textarea {
+	min-block-size: 3rem;
+	padding: 0.75rem 1rem;
+}
+
+.inquiry textarea {
+	min-block-size: 8rem;
+	resize: vertical;
+}
+
+.inquiry input[type="file"] {
+	padding: 0.75rem;
+	accent-color: #6e7f7c;
+}
+
+@media (min-width: 48rem) {
+	.inquiry-field legend,
+	.inquiry-field > label,
+	.inquiry input[type="text"],
+	.inquiry input[type="email"],
+	.inquiry input[type="tel"],
+	.inquiry textarea,
+	.inquiry input[type="file"],
+	.inquiry-status {
+		font-size: 1.5rem;
+	}
+}
+
+.inquiry input:focus-visible,
+.inquiry textarea:focus-visible,
+.inquiry button:focus-visible {
+	outline: 2px solid #111;
+	outline-offset: 2px;
+}
+
+.inquiry input:user-invalid,
+.inquiry textarea:user-invalid,
+.inquiry input[aria-invalid="true"],
+.inquiry textarea[aria-invalid="true"] {
+	border-color: #7f1d1d;
+	background: #fdf2f2;
+}
+
+.inquiry .field-error {
+	display: none;
+	margin-block-start: 0.35rem;
+	color: #7f1d1d;
+	font-size: 1.05rem;
+}
+
+.inquiry :user-invalid ~ .field-error,
+.inquiry .field-error.is-shown {
+	display: block;
+}
+
+.inquiry button[type="submit"] {
+	min-block-size: 3rem;
+	padding: 0.75rem 1.25rem;
+	border: 0;
+	border-radius: 0.25rem;
+	background: #c5d1cf;
+	color: #111;
+	font: inherit;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+@media (hover: hover) {
+	.inquiry button[type="submit"]:hover {
+		background: #b3c0be;
+	}
+}
+
+.inquiry button[type="submit"]:disabled {
+	cursor: wait;
+	opacity: 0.7;
+}
+
+.inquiry-status {
+	margin-block-end: 2rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid #a99d8b;
+	border-radius: 0.25rem;
+	background: #eee5d7;
+	font-size: 1.25rem;
+	line-height: 1.4;
+}
+
+.inquiry-status ul {
+	margin-block-start: 0.75rem;
+	padding-inline-start: 1.25em;
+}
+
+.inquiry-trap {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }

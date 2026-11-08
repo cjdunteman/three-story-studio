@@ -1,0 +1,342 @@
+---
+import Base from "../layouts/Base.astro";
+import {
+	deliverInquiry,
+	inquiryBodyTooLarge,
+	inquiryRateLimited,
+	parseInquiry,
+	type InquiryField,
+	type InquiryValues,
+} from "../lib/inquiry";
+
+const blank: InquiryValues = {
+	name: "",
+	email: "",
+	phone: "",
+	piece: "",
+	width: "",
+	depth: "",
+	height: "",
+	notes: "",
+};
+
+let values = blank;
+let fieldErrors: Partial<Record<InquiryField, string>> = {};
+let formError = "";
+let keepPhoto = false;
+
+if (Astro.request.method === "POST") {
+	try {
+		if (inquiryBodyTooLarge(Astro.request.headers.get("content-length"))) {
+			formError = "That photo is too large to send. Please use an image under 8 MB.";
+			Astro.response.status = 413;
+		} else {
+			const parsed = await parseInquiry(await Astro.request.formData());
+			if (!parsed.ok) {
+				values = parsed.values;
+				fieldErrors = parsed.fieldErrors;
+				formError = "Please add the missing details below.";
+				Astro.response.status = 400;
+			} else if (parsed.honeypot) {
+				return redirectSent();
+			} else {
+				values = parsed.inquiry;
+				keepPhoto = Boolean(parsed.inquiry.photo);
+				let ip = "unknown";
+				try {
+					ip = Astro.clientAddress;
+				} catch {
+					ip = "unknown";
+				}
+				if (inquiryRateLimited(ip)) {
+					formError = keepPhoto
+						? "Please wait a few minutes before sending another note. Choose the photo again when you send."
+						: "Please wait a few minutes before sending another note.";
+					Astro.response.status = 429;
+				} else {
+					await deliverInquiry(parsed.inquiry);
+					return redirectSent();
+				}
+			}
+		}
+	} catch (error) {
+		console.error("Inquiry email failed", error);
+		formError = keepPhoto
+			? "I could not send that just now. Please choose the photo again, or email me directly."
+			: "I could not send that just now. Please email me directly, or try again in a few minutes.";
+		Astro.response.status = 503;
+	}
+}
+
+const sent = Astro.request.method === "GET" && Astro.cookies.get("inquiry_sent")?.value === "1";
+if (sent) Astro.cookies.delete("inquiry_sent", { path: "/contact" });
+
+const invalid = (field: InquiryField) => (fieldErrors[field] ? "true" : undefined);
+
+function redirectSent() {
+	Astro.cookies.set("inquiry_sent", "1", {
+		path: "/contact",
+		maxAge: 120,
+		httpOnly: true,
+		sameSite: "lax",
+		secure: Astro.url.protocol === "https:",
+	});
+	return Astro.redirect("/contact", 303);
+}
+---
+
+<Base
+	title="Inquire — Three Story Studio"
+	description="Tell Kristin about your upholstery project. Share the piece, measurements, and a photo."
+>
+	<article class="inquiry mx-auto max-w-4xl px-6 py-8">
+		<h1 class="font-script mb-8 text-4xl leading-tight md:text-6xl">Inquire</h1>
+
+		{
+			sent && (
+				<p class="inquiry-status" role="status">
+					Thank you. I have your note and will get back to you to discuss the project and give you a base labor estimate.
+				</p>
+			)
+		}
+		{
+			formError && (
+				<div class="inquiry-status" role="alert">
+					<p>{formError}</p>
+					{Object.keys(fieldErrors).length > 0 && (
+						<ul>
+							{Object.values(fieldErrors).map((message) => (
+								<li>{message}</li>
+							))}
+						</ul>
+					)}
+					{!Object.keys(fieldErrors).length && (
+						<p>
+							<a class="underline decoration-1 underline-offset-4" href="mailto:kristin@threestorystudio.com">
+								kristin@threestorystudio.com
+							</a>
+						</p>
+					)}
+				</div>
+			)
+		}
+
+		<ol class="inquiry-steps text-xl md:text-2xl">
+			<li>
+				<p>Send me an email and tell me as much about your project as you can:</p>
+				<ul class="inquiry-points">
+					<li>Type/style of piece (wingback chair, custom banquette cushion, etc.)</li>
+					<li>Basic measurements are helpful. W × D × H</li>
+					<li>
+						Provide a photo if you can. This really helps me visualize the scope of the project and give you more info.
+					</li>
+				</ul>
+
+				<form id="inquiry" class="inquiry-form" method="post" action="/contact" enctype="multipart/form-data">
+					<p class="inquiry-hint">Required fields are marked.</p>
+					<div class="inquiry-trap" aria-hidden="true">
+						<label for="fax-number">Fax</label>
+						<input id="fax-number" name="fax_number" type="text" tabindex="-1" autocomplete="off" />
+					</div>
+
+					<div class="inquiry-field">
+						<label for="name">Name <span class="inquiry-required">Required</span></label>
+						<input
+							id="name"
+							name="name"
+							type="text"
+							autocomplete="name"
+							required
+							maxlength="120"
+							enterkeyhint="next"
+							value={values.name}
+							aria-invalid={invalid("name")}
+							aria-errormessage="name-error"
+						/>
+						<p id="name-error" class:list={["field-error", fieldErrors.name && "is-shown"]}>
+							{fieldErrors.name || "Please add your name."}
+						</p>
+					</div>
+
+					<div class="inquiry-field">
+						<label for="email">Email <span class="inquiry-required">Required</span></label>
+						<p id="email-hint" class="inquiry-hint">I will reply to this address.</p>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							autocapitalize="off"
+							autocorrect="off"
+							spellcheck="false"
+							required
+							maxlength="200"
+							enterkeyhint="next"
+							value={values.email}
+							aria-describedby="email-hint"
+							aria-invalid={invalid("email")}
+							aria-errormessage="email-error"
+						/>
+						<p id="email-error" class:list={["field-error", fieldErrors.email && "is-shown"]}>
+							{fieldErrors.email || "Enter a valid email address."}
+						</p>
+					</div>
+
+					<div class="inquiry-field">
+						<label for="phone">Phone</label>
+						<input
+							id="phone"
+							name="phone"
+							type="tel"
+							autocomplete="tel"
+							maxlength="40"
+							enterkeyhint="next"
+							value={values.phone}
+							aria-invalid={invalid("phone")}
+						/>
+					</div>
+
+					<div class="inquiry-field">
+						<label for="piece">Type / style of piece <span class="inquiry-required">Required</span></label>
+						<textarea
+							id="piece"
+							name="piece"
+							required
+							maxlength="2000"
+							rows="4"
+							aria-invalid={invalid("piece")}
+							aria-errormessage="piece-error">{values.piece}</textarea>
+						<p id="piece-error" class:list={["field-error", fieldErrors.piece && "is-shown"]}>
+							{fieldErrors.piece || "Please describe the piece."}
+						</p>
+					</div>
+
+					<fieldset class="inquiry-field">
+						<legend>Measurements <span class="inquiry-optional">W × D × H</span></legend>
+						<p id="measure-hint" class="inquiry-hint">Inches are fine. A rough size is enough to start.</p>
+						<div class="inquiry-measures">
+							<div>
+								<label for="width">Width</label>
+								<input
+									id="width"
+									name="width"
+									type="text"
+									maxlength="40"
+									enterkeyhint="next"
+									value={values.width}
+									aria-describedby="measure-hint"
+									aria-invalid={invalid("width")}
+								/>
+							</div>
+							<div>
+								<label for="depth">Depth</label>
+								<input
+									id="depth"
+									name="depth"
+									type="text"
+									maxlength="40"
+									enterkeyhint="next"
+									value={values.depth}
+									aria-describedby="measure-hint"
+									aria-invalid={invalid("depth")}
+								/>
+							</div>
+							<div>
+								<label for="height">Height</label>
+								<input
+									id="height"
+									name="height"
+									type="text"
+									maxlength="40"
+									enterkeyhint="next"
+									value={values.height}
+									aria-describedby="measure-hint"
+									aria-invalid={invalid("height")}
+								/>
+							</div>
+						</div>
+					</fieldset>
+
+					<div class="inquiry-field">
+						<label for="notes">Anything else</label>
+						<textarea id="notes" name="notes" maxlength="5000" rows="5" aria-invalid={invalid("notes")}>{values.notes}</textarea>
+					</div>
+
+					<div class="inquiry-field">
+						<label for="photo">Photo</label>
+						<p id="photo-hint" class="inquiry-hint">JPEG, PNG, WEBP, GIF, or HEIC. Up to 8 MB.</p>
+						<input
+							id="photo"
+							name="photo"
+							type="file"
+							accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif"
+							aria-describedby="photo-hint"
+							aria-invalid={invalid("photo")}
+							aria-errormessage="photo-error"
+						/>
+						<p id="photo-error" class:list={["field-error", fieldErrors.photo && "is-shown"]}>
+							{fieldErrors.photo || "Please send a JPEG, PNG, WEBP, GIF, or HEIC photo under 8 MB."}
+						</p>
+					</div>
+
+					<button type="submit">Send inquiry</button>
+				</form>
+			</li>
+			<li>
+				<p>
+					I will get back to you to discuss further and give you a base labor estimate. This is subject to change once the piece is inspected and if special details are added. I will also let you know what my schedule looks like at this time.
+				</p>
+			</li>
+			<li>
+				<p>
+					If you are ready to move forward, we will then discuss more details, fabric, and set up a final measure (if needed).
+				</p>
+			</li>
+		</ol>
+
+		<h2 class="font-script mt-16 mb-6 text-4xl md:text-5xl">FAQs</h2>
+		<div class="space-y-6 text-xl md:text-2xl">
+			<p>
+				Fabric Consultation Service: I offer this service for clients who want help with fabric selection. Please inquire for more information.
+			</p>
+			<p>
+				If you prefer to source your own fabric, I will calculate yardage for you and you are responsible for getting the fabric to me.
+			</p>
+			<p>
+				Materials included in my labor charge are: Dacron padding, welt cord, zippers, staples & thread. New foam and any special decorative details such as nailheads, buttons, tapes or trims are an additional charge.
+			</p>
+			<p>
+				I do not work on recliners or sofas due to space restrictions. Depending on the size, I may be able to do a small loveseat or settee.
+			</p>
+			<p>
+				Any pick-ups or deliveries made more than 25 miles from my studio will incur a travel fee subject to the total distance.
+			</p>
+			<p>
+				I will give you an approximate timeline for when I can begin your project. My schedule can run months out and is fluid. There are several factors that can delay or speed up my schedule. I promise to be as fair and as timely as possible.
+			</p>
+			<p>Thank you for your patience and understanding!</p>
+		</div>
+	</article>
+</Base>
+
+<script>
+	const form = document.querySelector("#inquiry");
+	if (form instanceof HTMLFormElement) {
+		const syncInvalid = (target: EventTarget | null) => {
+			if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
+			if (!target.willValidate) return;
+			if (target.matches(":user-invalid")) target.setAttribute("aria-invalid", "true");
+			else if (target.validity.valid) target.removeAttribute("aria-invalid");
+		};
+		form.addEventListener("blur", (event) => syncInvalid(event.target), true);
+		form.addEventListener("input", (event) => syncInvalid(event.target));
+		form.addEventListener("submit", () => {
+			if (!form.checkValidity()) return;
+			const button = form.querySelector("button[type=submit]");
+			if (button instanceof HTMLButtonElement) {
+				button.disabled = true;
+				button.textContent = "Sending…";
+			}
+		});
+	}
+</script>

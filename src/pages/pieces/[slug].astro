@@ -15,6 +15,14 @@ const photos = additionalPhotos(piece.data);
 if (photos.length === 0) return Astro.rewrite("/404");
 
 const showcase = piece.data.showcase?.id ? piece.data.showcase : undefined;
+
+function photoStyle(image: { width?: number; height?: number } | null | undefined) {
+	const width = image?.width;
+	const height = image?.height;
+	if (!width || !height) return undefined;
+	const ratio = Math.round((width / height) * 10000) / 10000;
+	return `--piece-ratio: ${ratio}`;
+}
 const description = typeof piece.data.description === "string" ? piece.data.description.trim() : "";
 const projectSlug = typeof piece.data.project_slug === "string" ? piece.data.project_slug.trim() : "";
 let projectTitle = "";
@@ -31,43 +39,41 @@ if (projectPath(projectSlug)) {
 ---
 
 <Base title={`${piece.data.title} — Three Story Studio`} description={description || undefined}>
-	<article class="mx-auto max-w-5xl px-6 pb-20 md:px-10">
-		<p class="mb-8 text-xl">
-			{
-				projectHref && (
-					<>
-						<span aria-hidden="true"> / </span>
+	<article class="pb-20">
+		<header class="mx-auto max-w-3xl px-6 md:px-10">
+			<p class="mb-8 text-xl">
+				{
+					projectHref && (
 						<a href={projectHref} class="underline decoration-1 underline-offset-4">
 							{projectTitle}
 						</a>
-					</>
+					)
+				}
+			</p>
+			<h1 class="font-script mb-6 text-4xl leading-tight md:text-6xl" {...piece.edit.title}>
+				{piece.data.title}
+			</h1>
+			{
+				description && (
+					<p class="max-w-3xl text-xl whitespace-pre-line md:text-2xl" {...piece.edit.description}>
+						{description}
+					</p>
 				)
 			}
-		</p>
-		<h1 class="font-script mb-6 text-4xl leading-tight md:text-6xl" {...piece.edit.title}>
-			{piece.data.title}
-		</h1>
-		{
-			description && (
-				<p class="max-w-3xl text-xl whitespace-pre-line md:text-2xl" {...piece.edit.description}>
-					{description}
-				</p>
-			)
-		}
-		<div class="mt-12 flex flex-col gap-14" {...piece.edit.photos}>
+		</header>
+		<div class="piece-photos" {...piece.edit.photos}>
 			{
 				showcase && (
-					<figure class="m-0" {...piece.edit.showcase}>
+					<figure style={photoStyle(showcase)} {...piece.edit.showcase}>
 						<Image
 							image={showcase}
 							alt={showcase.alt || piece.data.title}
-							class="w-full h-auto"
-							sizes="(min-width: 1024px) 960px, 100vw"
+							sizes="(min-width: 64rem) 32rem, 100vw"
 							priority
 							loading="eager"
 							fetchpriority="high"
 						/>
-						{showcase.caption && <figcaption class="mt-3 text-lg">{showcase.caption}</figcaption>}
+						{showcase.caption && <figcaption class="text-lg">{showcase.caption}</figcaption>}
 					</figure>
 				)
 			}
@@ -76,17 +82,16 @@ if (projectPath(projectSlug)) {
 					const caption = photo.caption || photo.image.caption?.trim() || "";
 					const first = !showcase && index === 0;
 					return (
-						<figure class="m-0">
+						<figure style={photoStyle(photo.image)}>
 							<Image
 								image={photo.image}
 								alt={photo.image.alt || caption || piece.data.title}
-								class="w-full h-auto"
-								sizes="(min-width: 1024px) 960px, 100vw"
+								sizes="(min-width: 64rem) 32rem, 100vw"
 								priority={first}
 								loading={first ? "eager" : "lazy"}
 								fetchpriority={first ? "high" : undefined}
 							/>
-							{caption && <figcaption class="mt-3 text-lg">{caption}</figcaption>}
+							{caption && <figcaption class="text-lg">{caption}</figcaption>}
 						</figure>
 					);
 				})
