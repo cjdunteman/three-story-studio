@@ -48,6 +48,11 @@ export default defineConfig({
 	integrations: [
 		react(),
 		emdash({
+            admin: {
+                logo: "/images/3SS_logo_transparent.png",
+                siteName: "Three Story Studio",
+                footerLabel: "Three Story Studio",
+            },
 			database: cloudflareBuild
 				? d1({ binding: "DB", session: "auto", coalesce: true })
 				: sqlite({ url: "file:./data.db" }),
