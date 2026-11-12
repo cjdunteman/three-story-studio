@@ -94,6 +94,18 @@
 			]
 		}
 	],
+	"taxonomies": [
+		{
+			"name": "category",
+			"label": "Categories",
+			"labelSingular": "Category",
+			"hierarchical": true,
+			"collections": ["pieces"],
+			"terms": [
+				{ "slug": "cushions-pillows", "label": "Cushions & Pillows" }
+			]
+		}
+	],
 	"menus": [
 		{
 			"name": "primary",
